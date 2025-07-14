@@ -2,18 +2,51 @@
 
 @section('content')
 <div class="container-fluid">
-    <div class="card shadow-sm">
-        <div class="card-header">
-            <h4>Detail Jadwal</h4>
-        </div>
-        <div class="card-body">
-           <div class="mb-3">
-            <p><strong>Ruangan:</strong> {{ $jadwal->ruangan->nama }}</p>
-            <p><strong>Tanggal:</strong> {{ $jadwal->tanggal_format }}</p>
-            <p><strong>Jam Mulai:</strong> {{ $jadwal->jam_mulai }}</p>
-            <p><strong>Jam Selesai:</strong> {{ $jadwal->jam_selesai }}</p>
-            <p><strong>Keterangan:</strong>{{ $jadwal->ket }}</p>
-            <a href="{{ route('backend.jadwal.index') }}" class="btn btn-secondary">Kembali</a>
+    <div class="row">
+        <div class="col">
+            <div class="card shadow-sm">
+                <div class="card-header bg-primary text-white">
+                    <b>Detail Jadwal</b>
+                </div>
+                <div class="card-body">
+
+                    {{-- Ruangan --}}
+                    <div class="mb-3">
+                        <label class="form-label">Ruangan</label>
+                        <input type="text" class="form-control" value="{{ $jadwal->ruangan->nama }}" disabled>
+                    </div>
+
+                    {{-- Tanggal --}}
+                    <div class="mb-3">
+                        <label class="form-label">Tanggal</label>
+                        <input type="text" class="form-control" value="{{ $jadwal->tanggal_format }}" disabled>
+                    </div>
+
+                    {{-- Jam Mulai --}}
+                    <div class="mb-3">
+                        <label class="form-label">Jam Mulai</label>
+                        <input type="text" class="form-control" value="{{ $jadwal->jam_mulai }}" disabled>
+                    </div>
+
+                    {{-- Jam Selesai --}}
+                    <div class="mb-3">
+                        <label class="form-label">Jam Selesai</label>
+                        <input type="text" class="form-control" value="{{ $jadwal->jam_selesai }}" disabled>
+                    </div>
+
+                    {{-- Keterangan --}}
+                    <div class="mb-3">
+                        <label class="form-label">Keterangan</label>
+                        <textarea class="form-control" rows="3" disabled>{{ $jadwal->ket }}</textarea>
+                    </div>
+
+                    {{-- Tombol --}}
+                    <div class="mt-4">
+                        <a href="{{ route('backend.jadwal.index') }}" class="btn btn-outline-warning">Kembali</a>
+                    </div>
+
+                </div>
+            </div>
         </div>
     </div>
 </div>

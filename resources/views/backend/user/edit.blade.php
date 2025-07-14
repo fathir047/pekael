@@ -12,7 +12,7 @@
                 @method('PUT')
 
                 <div class="mb-3">
-                    <label class="form-label">Name</label>
+                    <label class="form-label">Nama</label>
                     <input type="text" name="name" class="form-control" value="{{ $user->name }}" required>
                 </div>
 
@@ -22,24 +22,24 @@
                 </div>
 
                 <div class="mb-3">
-                    <label class="form-label">New Password <small class="text-muted">(Leave blank if not
-                            changing)</small></label>
+                    <label class="form-label">Password Baru</label>
                     <input type="password" name="password" class="form-control">
                 </div>
 
                 <div class="mb-3">
-                    <label class="form-label">Confirm New Password</label>
+                    <label class="form-label">Confirmasi Password Baru</label>
                     <input type="password" name="password_confirmation" class="form-control">
                 </div>
 
-                <div class="form-check mb-3">
-                    <input type="checkbox" name="isAdmin" class="form-check-input" id="isAdmin" {{ $user->is_admin ?
-                    'checked' : '' }}>
+                <div class="form-check form-switch mb-3">
+                    <input type="checkbox" name="is_admin" class="form-check-input" id="isAdmin"
+                        {{ $user->is_admin ? 'checked' : '' }}>
                     <label class="form-check-label" for="isAdmin">Admin</label>
                 </div>
 
-                <button class="btn btn-success">Update</button>
-                <a href="{{ route('backend.user.index') }}" class="btn btn-secondary">Cancel</a>
+
+                <button class="btn btn-outline-primary">Update</button>
+                <a href="{{ route('backend.user.index') }}" class="btn btn-outline-danger">Cancel</a>
             </form>
         </div>
     </div>

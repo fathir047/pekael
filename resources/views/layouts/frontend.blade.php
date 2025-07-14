@@ -13,7 +13,7 @@
   <!-- Core Css -->
   <link rel="stylesheet" href="{{asset('assets/backend/css/styles.css')}}" />
 
-  <title>SIRUANG</title>
+  <title>siruang</title>
   <!-- Owl Carousel  -->
   <link rel="stylesheet" href="{{asset('assets/backend/libs/owl.carousel/dist/assets/owl.carousel.min.css')}}" />
 </head>
@@ -25,40 +25,16 @@
   <div class="preloader">
     <img src="{{asset('assets/backend/images/logos/favicon.png')}}" alt="loader" class="lds-ripple img-fluid" />
   </div>
-  <!-- ------------------------------------- -->
-  <!-- Top Bar Start -->
-  <!-- ------------------------------------- -->
-  <!-- ------------------------------------- -->
-  <!-- Top Bar End -->
-  <!-- ------------------------------------- -->
 
-  <!-- ------------------------------------- -->
-  <!-- Header Start -->
-  <!-- ------------------------------------- -->
+  <!-- navbar -->
     @include('layouts.components-frontend.navbar')
-  <!-- ------------------------------------- -->
-  <!-- Header End -->
-  <!-- ------------------------------------- -->
+  <!-- end navbar -->
 
-  <!-- ------------------------------------- -->
-  <!-- Responsive Sidebar Start -->
-  <!-- ------------------------------------- -->
-  
-  <!-- ------------------------------------- -->
-  <!-- Responsive Sidebar End -->
-  <!-- ------------------------------------- -->
+ 
   <main>
     @yield('content')
   </main>
 
-
-
-
-  <!-- ------------------------------------- -->
-  <!-- Footer Start -->
- 
-  <!-- Footer End -->
-  <!-- ------------------------------------- -->
 
   <!-- Scroll Top -->
   <a href="javascript:void(0)" class="top-btn btn btn-primary d-flex align-items-center justify-content-center round-54 p-0 rounded-circle">
@@ -77,7 +53,9 @@
   <script src="https://cdn.jsdelivr.net/npm/iconify-icon@1.0.8/dist/iconify-icon.min.js')}}"></script>
   <script src="{{asset('assets/backend/libs/owl.carousel/dist/owl.carousel.min.js')}}"></script>
   <script src="{{asset('assets/backend/js/frontend-landingpage/homepage.js')}}"></script>
-   @include('sweetalert::alert')
+  @include('sweetalert::alert')
+  @stack('styles')
+  @stack('scripts')
 </body>
 
 </html>

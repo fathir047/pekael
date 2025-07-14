@@ -17,16 +17,16 @@ class UsersSeeder extends Seeder
 
             \App\Models\User::create([
                 'name'=>'Admin',
-                'email'=>'admin@gmail.com',
-                'password'=>bcrypt('Tes123'),
+                'email'=>'admin@example.com',
+                'password'=>bcrypt('fathir123'),
                 'is_admin'=>1,
             ]);
 
             \App\Models\User::create([
-            'name'=>'Member',
-            'email'=>'member@gmail.com',
-            'password'=>bcrypt('Tes123'),
-            'is_admin'=>0,
+                'name'=>'Member',
+                'email'=>'member@example.com',
+                'password'=>bcrypt('fathir047'),
+                'is_admin'=>0,
             ]);
     }
 }

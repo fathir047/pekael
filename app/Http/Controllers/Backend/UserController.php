@@ -20,22 +20,26 @@ class UserController extends Controller
         return view('backend.user.create');
     }
 
+    
+
     public function store(Request $request)
+
+        
     {
         $request->validate([
             'name'     => 'required|string|max:255',
             'email'    => 'required|email|unique:users,email',
             'password' => 'required|string|min:6|confirmed',
         ]);
-
+        
         $user = new User;
-        $user->name     = $request->name;
-        $user->email    = $request->email;
+        $user->name             = $request->name;
+        $user->email            = $request->email;
         $user->password = Hash::make($request->password);
         $user->is_admin = $request->has('is_admin');
         $user->save();
 
-        toast('MADEP', 'success');
+        toast('Ges aya tah bagong', 'success');
         return redirect()->route('backend.user.index')->with('success', 'User created successfully.');
     }
 
@@ -62,14 +66,14 @@ class UserController extends Controller
         $user->is_admin = $request->has('is_admin');
         $user->save();
 
-        toast('MADEP', 'success');
+        toast('ges ka ubah tah', 'success');
         return redirect()->route('backend.user.index')->with('success', 'User updated successfully.');
     }
 
     public function destroy(User $user)
     {
         $user->delete();
-        toast('MADEP');
+        toast('ges eweh tah', 'success');
         return redirect()->route('backend.user.index')->with('success', 'User deleted successfully.');
     }
 }

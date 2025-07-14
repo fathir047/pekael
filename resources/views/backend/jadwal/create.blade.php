@@ -40,9 +40,9 @@
                     <input type="text" name="ket" class="form-control" required>
                 </div>
 
-                <div class="d-flex justify-content-end">
-                    <a href="{{ route('backend.jadwal.index') }}" class="btn btn-secondary me-2">Cancel</a>
-                    <button type="submit" class="btn btn-primary">Save</button>
+                <div class="d-flex justify-content-start">
+                    <button type="submit" class="btn btn-outline-primary">Simpan</button>
+                    <a href="{{ route('backend.jadwal.index') }}" class="btn btn-outline-danger me-2" style="margin-left: 5px;">Batal</a>
                 </div>
 
             </form>

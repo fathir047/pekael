@@ -1,83 +1,109 @@
 @extends('layouts.backend')
+
 @section('content')
-<div class="container-fluid">
-    <!--  Owl carousel -->
-    <div class="owl-carousel counter-carousel owl-theme">
-        <div class="item">
-            <div class="card border-0 zoom-in bg-primary-subtle shadow-none">
-                <div class="card-body">
+ <div class="container-fluid">
+          <!--  count -->
+          <div class="row">
+            <!-- user -->
+            <div class="col-md-3"> <!-- atur ukuran card -->
+              <div class="card border-0 zoom-in bg-primary shadow">
+                <a href="{{route('backend.user.index')}}">
+                  <div class="card-body">
                     <div class="text-center">
-                        <img src="{{asset('assets/backend/images/svgs/icon-user-male.svg')}}" width="50" height="50"
-                            class="mb-3" alt="modernize-img" />
-                        <p class="fw-semibold fs-3 text-primary mb-1">
-                            Employees
-                        </p>
-                        <h5 class="fw-semibold text-primary mb-0">96</h5>
+                      <i class="ti ti-user" style="font-size: 70px; color: white;"></i>
+                      <p class="fw-semibold fs-3 text-light mb-1">User</p>
+                      <h5 class="fw-semibold text-light mb-0">{{ \App\Models\User::count() }}</h5>
                     </div>
-                </div>
+                  </div>
+                </a>
+              </div>
             </div>
-        </div>
-        <div class="item">
-            <div class="card border-0 zoom-in bg-warning-subtle shadow-none">
-                <div class="card-body">
+            <!-- end user -->
+
+            <!-- ruangan -->
+            <div class="col-md-3"> <!-- atur ukuran card -->
+              <div class="card border-0 zoom-in bg-primary shadow">
+                <a href="{{route ('backend.ruangan.index')}}">
+                  <div class="card-body">
                     <div class="text-center">
-                        <img src="{{asset('assets/backend/images/svgs/icon-briefcase.svg')}}" width="50" height="50"
-                            class="mb-3" alt="modernize-img" />
-                        <p class="fw-semibold fs-3 text-warning mb-1">Clients</p>
-                        <h5 class="fw-semibold text-warning mb-0">3,650</h5>
+                      <i class="ti ti-door" style="font-size: 70px; color: white;"></i>
+                      <p class="fw-semibold fs-3 text-light mb-1">Ruangan</p>
+                      <h5 class="fw-semibold text-light mb-0">{{ \App\Models\ruangans::count() }}</h5>
                     </div>
-                </div>
+                  </div>
+                </a>
+              </div>
             </div>
-        </div>
-        <div class="item">
-            <div class="card border-0 zoom-in bg-info-subtle shadow-none">
-                <div class="card-body">
+            <!-- end ruangan -->
+
+            <!-- jadwal -->
+            <div class="col-md-3"> <!-- atur ukuran card -->
+              <div class="card border-0 zoom-in bg-primary shadow">
+                <a href="{{route ('backend.jadwal.index')}}">
+                  <div class="card-body">
                     <div class="text-center">
-                        <img src="{{asset('assets/backend/images/svgs/icon-mailbox.svg')}}" width="50" height="50"
-                            class="mb-3" alt="modernize-img" />
-                        <p class="fw-semibold fs-3 text-info mb-1">Projects</p>
-                        <h5 class="fw-semibold text-info mb-0">356</h5>
+                      <i class="ti ti-calendar" style="font-size: 70px; color: white;"></i>
+                      <p class="fw-semibold fs-3 text-light mb-1">jadwal</p>
+                      <h5 class="fw-semibold text-light mb-0">{{ \App\Models\jadwals::count() }}</h5>
                     </div>
-                </div>
+                  </div>
+                </a>
+              </div>
             </div>
-        </div>
-        <div class="item">
-            <div class="card border-0 zoom-in bg-danger-subtle shadow-none">
-                <div class="card-body">
+            <!-- end jadwal -->
+
+            <!-- booking -->
+            <div class="col-md-3"> <!-- atur ukuran card -->
+              <div class="card border-0 zoom-in bg-primary shadow">
+                <a href="{{route ('backend.bookings.index')}}">
+                  <div class="card-body">
                     <div class="text-center">
-                        <img src="{{asset('assets/backend/images/svgs/icon-favorites.svg')}}" width="50" height="50"
-                            class="mb-3" alt="modernize-img" />
-                        <p class="fw-semibold fs-3 text-danger mb-1">Events</p>
-                        <h5 class="fw-semibold text-danger mb-0">696</h5>
+                      <i class="ti ti-bookmark" style="font-size: 70px; color: white;"></i>
+                      <p class="fw-semibold fs-3 text-light mb-1">booking</p>
+                      <h5 class="fw-semibold text-light mb-0">{{ \App\Models\bookings::count() }}</h5>
                     </div>
-                </div>
+                  </div>
+                </a>
+              </div>
             </div>
-        </div>
-        <div class="item">
-            <div class="card border-0 zoom-in bg-success-subtle shadow-none">
+            <!-- end booking -->
+          </div>
+          <!-- end count -->
+
+          <!--  Row 1 -->
+          <div class="row">
+            <div class="col-lg-12 d-flex align-items-stretch">
+              <div class="card w-100 shadow">
                 <div class="card-body">
-                    <div class="text-center">
-                        <img src="{{asset('assets/backend/images/svgs/icon-speech-bubble.svg')}}" width="50" height="50"
-                            class="mb-3" alt="modernize-img" />
-                        <p class="fw-semibold fs-3 text-success mb-1">Payroll</p>
-                        <h5 class="fw-semibold text-success mb-0">$96k</h5>
+                  <div class="d-sm-flex d-block align-items-center justify-content-between mb-7">
+                    <div class="mb-3 mb-sm-0">
+                      <h4 class="card-title fw-semibold">Booking</h4>
+                      <p class="card-subtitle">Status Booking</p>
                     </div>
+                  </div>
+                  <div class="table-responsive">
+                    <table class="table align-middle text-nowrap mb-0">
+                      <thead>
+                          <tr class="text-muted fw-semibold">
+                              <th scope="col">Nama</th>
+                              <th scope="col">Ruangan</th>
+                              <th scope="col">Tanggal</th>
+                              <th scope="col">Jam Mulai</th>
+                              <th scope="col">Jam Selesai</th>
+                              <th scope="col">Status</th>
+                          </tr>
+                      </thead>
+                      <tbody class="border-top">
+                        <!-- isi table -->
+                        
+                        <!-- end isi table -->
+                      </tbody>
+                    </table>
+                  </div>
                 </div>
+              </div>
             </div>
+          </div>
         </div>
-        <div class="item">
-            <div class="card border-0 zoom-in bg-info-subtle shadow-none">
-                <div class="card-body">
-                    <div class="text-center">
-                        <img src="{{asset('assets/backend/images/svgs/icon-connect.svg')}}" width="50" height="50"
-                            class="mb-3" alt="modernize-img" />
-                        <p class="fw-semibold fs-3 text-info mb-1">Reports</p>
-                        <h5 class="fw-semibold text-info mb-0">59</h5>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-   
-</div>
+
 @endsection

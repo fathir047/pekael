@@ -14,7 +14,7 @@ class RuanganController extends Controller
     {
         $ruangans = ruangans::latest()->get();
 
-        $title = 'Hapus Data!';
+        $title = 'takut ga sama gurita?!';
         $text  = "Apakah anda yakin ingin menghapus ruangan ini?";
         confirmDelete($title, $text);
 
@@ -49,7 +49,7 @@ class RuanganController extends Controller
         $ruangan->fasilitas = $request->fasilitas;
         $ruangan->save();
 
-        toast('Data ruangan berhasil disimpan.', 'success');
+        toast('Ges ka tambah tah', 'success');
         return redirect()->route('backend.ruangan.index');
     }
 

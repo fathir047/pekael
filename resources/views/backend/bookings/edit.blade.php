@@ -3,7 +3,7 @@
 @section('content')
 <div class="container-fluid">
     <div class="card shadow-sm">
-        <div class="card-header bg-warning text-white">
+        <div class="card-header bg-primary">
             <h5 class="mb-0">Edit Booking</h5>
         </div>
 
@@ -51,11 +51,11 @@
                         <option value="Pending" {{ $booking->status == 'Pending' ? 'selected' : '' }}>Pending</option>
                         <option value="Diterima" {{ $booking->status == 'Diterima' ? 'selected' : '' }}>Diterima</option>
                         <option value="Ditolak" {{ $booking->status == 'Ditolak' ? 'selected' : '' }}>Ditolak</option>
-                        <option value="Selesai" {{ $booking->status == 'Selesai' ? 'selected' : '' }}>Completed</option>
+                        <option value="Selesai" {{ $booking->status == 'Selesai' ? 'selected' : '' }}>Selesai</option>
                     </select>
                 </div>
 
-                <button type="submit" class="btn btn-primary">Update</button>
+                <button type="submit" class="btn btn-sm btn-outline-primary">Update</button>
             </form>
         </div>
     </div>

@@ -2,18 +2,52 @@
 
 @section('content')
 <div class="container-fluid">
-    <div class="card shadow-sm">
-        <div class="card-header">
-            <h4>Detail Ruangan</h4>
-        </div>
-        <div class="card-body">
-            <div class="mb-3">
-                <img src="{{ asset('storage/' . $ruangan->cover) }}" alt="Cover" width="200">
+    <div class="row">
+        <div class="col">
+            <div class="card shadow-sm">
+                <div class="card-header bg-primary text-white">
+                    <b>Detail Ruangan</b>
+                </div>
+                <div class="card-body">
+                    
+                    {{-- Foto --}}
+                    <div class="mb-3">
+                        <label class="form-label">Foto</label><br>
+                        @if($ruangan->cover)
+                            <div class="text-center">
+                                <img src="{{ asset('storage/' . $ruangan->cover) }}" width="500px" alt="Cover" class="img-fluid rounded">
+                            </div>
+                        @else
+                            <p class="text-muted">Tidak ada foto</p>
+                        @endif
+                    </div>
+
+                    {{-- Nama --}}
+                    <div class="mb-3">
+                        <label class="form-label">Nama Ruangan</label>
+                        <input type="text" class="form-control" value="{{ $ruangan->nama }}" disabled>
+                    </div>
+
+                    {{-- Kapasitas --}}
+                    <div class="mb-3">
+                        <label class="form-label">Kapasitas Ruangan</label>
+                        <input type="number" class="form-control" value="{{ $ruangan->kapasitas }}" disabled>
+                    </div>
+
+                    {{-- Fasilitas --}}
+                    <div class="mb-3">
+                        <label class="form-label">Fasilitas Ruangan</label>
+                        <textarea class="form-control" rows="4" disabled>{{ $ruangan->fasilitas }}</textarea>
+                    </div>
+
+                    {{-- Tombol --}}
+                    <div class="mt-4">
+                        <a href="{{ route('backend.ruangan.index') }}" class="btn btn-outline-secondary">Kembali</a>
+                        <a href="{{ route('backend.ruangan.edit', $ruangan->id) }}" class="btn btn-outline-warning ms-2">Edit</a>
+                    </div>
+
+                </div>
             </div>
-            <p><strong>Nama:</strong> {{ $ruangan->nama }}</p>
-            <p><strong>Kapasitas:</strong> {{ $ruangan->kapasitas }}</p>
-            <p><strong>Fasilitas:</strong> {{ $ruangan->fasilitas }}</p>
-            <a href="{{ route('backend.ruangan.index') }}" class="btn btn-secondary">Kembali</a>
         </div>
     </div>
 </div>

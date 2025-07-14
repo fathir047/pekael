@@ -13,7 +13,7 @@
   <!-- Core Css -->
   <link rel="stylesheet" href="{{ asset('assets/backend/css/styles.css')}}" />
 
-  <title>Admin SIRUANG</title>
+  <title>Admin</title>
   <!-- Owl Carousel  -->
   <link rel="stylesheet" href="{{ asset('assets/backend/libs/owl.carousel/dist/assets/owl.carousel.min.css')}}" />
 </head>

@@ -4,9 +4,10 @@
         <!-- Start Vertical Layout Sidebar -->
         <!-- ---------------------------------- -->
         <div class="brand-logo d-flex align-items-center justify-content-between">
-            <a href="./main/index.html" class="text-nowrap logo-img">
-                <img src="{{asset('assets/backend/img/logo.png')}}" class="dark-logo" alt="Logo-Dark" height="78" />
-            </a>
+            <a href="/main/index.html" class="text-nowrap logo-img">
+            <img src="/assets/backend/img/dark-logo.png" class="dark-logo" height="53px" alt="Logo-Dark" />
+            <img src="/assets/backend/img/light-logo.png" class="light-logo"  height="70px" alt="Logo-light" style="margin-left: 5px;"/>
+          </a>
             <a href="javascript:void(0)" class="sidebartoggler ms-auto text-decoration-none fs-5 d-block d-xl-none">
                 <i class="ti ti-x"></i>
             </a>
@@ -14,59 +15,44 @@
 
         <nav class="sidebar-nav scroll-sidebar" data-simplebar>
             <ul id="sidebarnav">
-                <!-- ---------------------------------- -->
-                <!-- Home -->
-                <!-- ---------------------------------- -->
-                <li class="nav-small-cap">
-                    <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
-                    <span class="hide-menu">Home</span>
-                </li>
-                <!-- ---------------------------------- -->
-                <!-- Dashboard -->
-                <!-- ---------------------------------- -->
+                <hr>
                 <li class="sidebar-item">
                     <a class="sidebar-link" href="{{ url('admin') }}" aria-expanded="false">
                         <span>
-                            <i class="ti ti-aperture"></i>
+                            <i class="ti ti-home"></i>
                         </span>
-                        <span class="hide-menu">Dashboard</span>
+                        <span class="hide-menu">Home</span>
                     </a>
                 </li>
                 <li class="sidebar-item">
                     <a class="sidebar-link" href="{{ route('backend.user.index') }}" aria-expanded="false">
                         <span>
-                            <i class="ti ti-aperture"></i>
+                            <i class="ti ti-user"></i>
                         </span>
                         <span class="hide-menu">User</span>
                     </a>
                 </li>
                 <li class="sidebar-item">       
                     <a class="sidebar-link" href="{{ route('backend.ruangan.index') }}" aria-expanded="false">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-                            <path fill="currentColor"
-                                d="m21.706 5.291l-2.999-2.998A1 1 0 0 0 18 2H6a1 1 0 0 0-.707.293L2.294 5.291A1 1 0 0 0 2 5.999V19c0 1.103.897 2 2 2h16c1.103 0 2-.897 2-2V5.999a1 1 0 0 0-.294-.708M6.414 4h11.172l.999.999H5.415zM4 19V6.999h16L20.002 19z" />
-                            <path fill="currentColor" d="M15 12H9v-2H7v4h10v-4h-2z" />
-                        </svg>
+                        <span>
+                            <i class="ti ti-door"></i>
+                        </span>
                         <span class="hide-menu">Ruangan</span>
                     </a>
                 </li>
                   <li class="sidebar-item">       
                     <a class="sidebar-link" href="{{ route('backend.jadwal.index') }}" aria-expanded="false">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-                            <path fill="currentColor"
-                                d="m21.706 5.291l-2.999-2.998A1 1 0 0 0 18 2H6a1 1 0 0 0-.707.293L2.294 5.291A1 1 0 0 0 2 5.999V19c0 1.103.897 2 2 2h16c1.103 0 2-.897 2-2V5.999a1 1 0 0 0-.294-.708M6.414 4h11.172l.999.999H5.415zM4 19V6.999h16L20.002 19z" />
-                            <path fill="currentColor" d="M15 12H9v-2H7v4h10v-4h-2z" />
-                        </svg>
+                       <span>
+                            <i class="ti ti-calendar"></i>
+                        </span>
                         <span class="hide-menu">Jadwal</span>
                     </a>
                 </li>
                   <li class="sidebar-item">       
                     <a class="sidebar-link" href="{{ route('backend.bookings.index') }}" aria-expanded="false">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-                            <path fill="currentColor"
-                                d="m21.706 5.291l-2.999-2.998A1 1 0 0 0 18 2H6a1 1 0 0 0-.707.293L2.294 5.291A1 1 0 0 0 2 5.999V19c0 1.103.897 2 2 2h16c1.103 0 2-.897 2-2V5.999a1 1 0 0 0-.294-.708M6.414 4h11.172l.999.999H5.415zM4 19V6.999h16L20.002 19z" />
-                            <path fill="currentColor" d="M15 12H9v-2H7v4h10v-4h-2z" />
-                        </svg>
+                        <span>
+                            <i class="ti ti-bookmark"></i>
+                        </span>
                         <span class="hide-menu">Booking</span>
                     </a>
                 </li>
@@ -76,8 +62,7 @@
         <div class="fixed-profile p-3 mx-4 mb-2 bg-secondary-subtle rounded mt-3">
             <div class="hstack gap-3">
                 <div class="john-img">
-                    <img src="{{asset('assets/backend/images/profile/user-1.jpg')}}" class="rounded-circle" width="40"
-                        height="40" alt="modernize-img" />
+                    <img src="{{asset('/assets/backend/img/pp.jpeg')}}" class="rounded-circle" width="40" height="40" alt="modernize-img" />
                 </div>
                 <div class="john-title">
                     <h6 class="mb-0 fs-4 fw-semibold">{{Auth::user()->name}}</h6>
@@ -89,11 +74,9 @@
                     data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="logout">
                     <i class="ti ti-power fs-6"></i>
                 </a>
-
                 <form action="{{ route('logout') }}" method="post" id="logout-form">
                     @csrf
                 </form>
-
             </div>
         </div>
 

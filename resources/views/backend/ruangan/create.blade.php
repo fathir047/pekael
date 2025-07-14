@@ -21,7 +21,7 @@
 
                 <div class="mb-3">
                     <label class="form-label">Kapasitas</label>
-                    <input type="text" name="kapasitas" class="form-control" required>
+                    <input type="number" name="kapasitas" class="form-control" required>
                 </div>
 
                 <div class="mb-3">
@@ -29,9 +29,9 @@
                     <textarea name="fasilitas" rows="4" class="form-control" required></textarea>
                 </div>
 
-                <div class="d-flex justify-content-end">
-                    <a href="{{ route('backend.ruangan.index') }}" class="btn btn-secondary me-2">Cancel</a>
-                    <button type="submit" class="btn btn-primary">Save</button>
+                <div class="d-flex justify-content-start">
+                    <button type="submit" class="btn btn-sm btn-outline-primary me-2">Save</button>
+                    <a href="{{ route('backend.ruangan.index') }}" class="btn btn-sm btn-outline-secondary">Cancel</a>
                 </div>
 
             </form>

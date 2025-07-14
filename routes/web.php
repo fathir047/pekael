@@ -26,14 +26,11 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 
 Route::group(['prefix' => 'admin', 'as' => 'backend.', 'middleware' => ['auth', Admin::class]], function () {
     Route::get('/', [BackendController::class, 'index']);
-    
-  
-
-    // // crud resource
     Route::resource('/user', UserController::class);
     Route::resource('/ruangan', RuanganController::class);
     Route::resource('/jadwal', JadwalController::class);
     Route::resource('/bookings', BookingController::class);
+    Route::get('bookings-export', [BookingController::class, 'export'])->name('bookings.export');
     
 });
 
@@ -42,6 +39,9 @@ Route::group(['prefix' => 'admin', 'as' => 'backend.', 'middleware' => ['auth', 
 Route::middleware(['auth'])->group(function () {
     Route::get('/booking/create', [UserBookingController::class, 'create'])->name('bookings.create');
     Route::post('/booking', [UserBookingController::class, 'store'])->name('bookings.store');
-    Route::get('/booking/{id}', [UserBookingController::class, 'show'])->name('bookings.show');
+    Route::get('/booking/riwayat', [UserBookingController::class, 'riwayat'])->name('bookings.riwayat');
+    Route::get('/ruangan', [UserBookingController::class, 'show'])->name('ruangan.show');
+    Route::get('/ruangan/{id}', [UserBookingController::class, 'tampil'])->name('ruangan.show');
 });
 
+Route::get('/ruangan/{id}', [FrontendController::class, 'ruanganShow'])->name('ruangan.detail');
