@@ -26,7 +26,7 @@
                             <span>Kapasitas : </span>
                             <span class="badge bg-primary" style="shadow"> {{ $data->kapasitas }}</span>
                         </div>
-                        
+                         
                         <div class="mb-3">
                             <h6 class="text-uppercase text-muted small mb-2">Fasilitas</h6>
                             <div class="d-flex flex-wrap gap-2">

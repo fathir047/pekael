@@ -32,7 +32,7 @@ Route::group(['prefix' => 'admin', 'as' => 'backend.', 'middleware' => ['auth', 
     Route::resource('/bookings', BookingController::class);
     Route::get('bookings-export', [BookingController::class, 'export'])->name('bookings.export');
     
-});
+}); 
 
 
 

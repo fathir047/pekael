@@ -63,7 +63,7 @@ class UserController extends Controller
             $user->password = Hash::make($request->password);
         }
 
-        $user->is_admin = $request->has('is_admin');
+        $user->is_admin = $request->has('is_admin'); 
         $user->save();
 
         toast('ges ka ubah tah', 'success');

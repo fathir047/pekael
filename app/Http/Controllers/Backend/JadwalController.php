@@ -10,7 +10,7 @@ use Illuminate\Http\Request;
 
 class JadwalController extends Controller
 {
-        public function index()
+        public function index() 
     {
         $jadwals = jadwals::orderBy('tanggal', 'desc')->get()->map(function ($jadwal) {
             $jadwal->tanggal_format = Carbon::parse($jadwal->tanggal)->translatedFormat('l, j F Y');

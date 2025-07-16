@@ -41,7 +41,7 @@
                 </span>
             </div>
             
-            @endforeach
+            @endforeach 
 
             <div class="d-flex justify-content-end">
                 <a href="{{ route('bookings.create') }}" class="btn btn-primary">Buat Booking Baru</a>

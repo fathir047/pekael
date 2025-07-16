@@ -24,7 +24,7 @@
                             <label for="kapasitas" class="form-label">Kapasitas</label>
                             <input type="text" name="kapasitas" id="kapasitas" class="form-control" value="{{ $ruangan->kapasitas }}" required>
                         </div>
-
+ 
                         {{-- Fasilitas --}}
                         <div class="mb-3">
                             <label for="fasilitas" class="form-label">Fasilitas</label>

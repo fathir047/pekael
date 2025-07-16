@@ -25,7 +25,7 @@
                                         {{ $data->nama }}
                                     </option>
                                 @endforeach
-                            </select>
+                            </select> 
                         </div>
 
                         <div class="mb-3">

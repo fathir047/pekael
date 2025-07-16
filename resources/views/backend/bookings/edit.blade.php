@@ -18,8 +18,8 @@
                         @foreach ($users as $user)
                             <option value="{{ $user->id }}" {{ $user->id == $booking->user_id ? 'selected' : '' }}>{{ $user->name }}</option>
                         @endforeach
-                    </select>
-                </div>
+                    </select> 
+              </div>
 
                 <div class="mb-3">
                     <label for="ruang_id" class="form-label">Ruangan</label>

@@ -11,4 +11,4 @@ class BackendController extends Controller
     {
         return view('backend.index');
     }
-}
+} 

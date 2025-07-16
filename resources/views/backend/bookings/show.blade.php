@@ -17,5 +17,5 @@
             <a href="{{ route('backend.bookings.index') }}" class="btn btn-secondary">Kembali</a>
         </div>
     </div>
-</div>
+</div> 
 @endsection

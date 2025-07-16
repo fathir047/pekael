@@ -43,7 +43,7 @@
                     <img src="{{asset('/assets/backend/img/pp.jpeg')}}" class="rounded-circle" width="35" height="35" alt="modernize-img" />
                   </div>
                 </div>
-              </a>
+              </a> 
               <div class="dropdown-menu content-dd dropdown-menu-end dropdown-menu-animate-up" aria-labelledby="drop1">
                 <div class="profile-dropdown position-relative" data-simplebar>
                   <div class="py-3 px-7 pb-0">

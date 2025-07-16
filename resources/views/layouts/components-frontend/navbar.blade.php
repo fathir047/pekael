@@ -56,7 +56,7 @@
               <a class="nav-link dropdown-toggle text-dark" href="#" role="button" data-bs-toggle="dropdown">
                 {{ Auth::user()->name }}
               </a>
-              <ul class="dropdown-menu dropdown-menu-end">
+              <ul class="dropdown-menu dropdown-menu-end"> 
                 <li>
                   <a class="dropdown-item text-danger" href="{{ route('logout') }}"
                      onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
@@ -66,11 +66,6 @@
                     @csrf
                   </form>
                 </li>
-                 @auth
-                  <li class="nav-item">
-                    <a class="nav-link text-dark fw-medium dropdown-item" href="{{ route('bookings.riwayat') }}">Riwayat</a>
-                  </li>
-                @endauth
               </ul>
             </li>
           @endguest

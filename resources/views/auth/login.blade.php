@@ -130,7 +130,7 @@
         <label for="email">Email</label>
         <input id="email" type="email"
                class="@error('email') is-invalid @enderror"
-               name="email" value="{{ old('email') }}" required autofocus>
+               name="email" value="{{ old('email') }}" required autofocus> 
         @error('email')
           <div class="invalid-feedback">{{ $message }}</div>
         @enderror

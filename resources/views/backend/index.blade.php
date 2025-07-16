@@ -1,6 +1,7 @@
 @extends('layouts.backend')
 
 @section('content')
+
  <div class="container-fluid">
           <!--  count -->
           <div class="row">
@@ -95,11 +96,11 @@
                       </thead>
                       <tbody class="border-top">
                         <!-- isi table -->
-                        
+
                         <!-- end isi table -->
                       </tbody>
                     </table>
-                  </div>
+                  </div> 
                 </div>
               </div>
             </div>

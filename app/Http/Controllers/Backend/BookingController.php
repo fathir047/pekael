@@ -28,7 +28,7 @@ class BookingController extends Controller
 
         if (request()->filled('status')) {
             $filter->where('status', request('status'));
-        }
+        } 
 
         $bookings = $filter->orderBy('status')->get();
 

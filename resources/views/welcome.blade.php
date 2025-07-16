@@ -23,7 +23,30 @@
     <div class="container">
       <div class="card border-0 shadow rounded-4">
         <div class="card-body">
-          <h4 class="fw-semibold text-center mb-4">Kalender Jadwal & Booking</h4>
+          <h4 class="fw-semibold text-center mb-4">Kalender Jadwal & Booking</h4> 
+          <table border="0" cellpadding="10">
+            <tr>
+              <td>
+                <div style="display: flex; align-items: center;">
+                  <div style="width: 20px; height: 20px; border-radius: 50px; background-color: #ff9500ff; margin-right: 10px;"></div>
+                  <span>Di Booking</span>
+                </div>
+              </td>
+              <td>
+                <div style="display: flex; align-items: center;">
+                  <div style="width: 20px; height: 20px; border-radius: 50px; background-color: #00aaffff; margin-right: 10px;"></div>
+                  <span>Jadwal Tetap</span>
+                </div>
+              </td>
+              <td>
+                <div style="display: flex; align-items: center;">
+                  <div style="width: 20px; height: 20px; border-radius: 50px; background-color: #fffb7dff; margin-right: 10px;"></div>
+                  <span>Hari Ini</span>
+                </div>
+              </td>
+            </tr>
+          </table>
+
           <div id="calendar"></div>
         </div>
       </div>

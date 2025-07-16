@@ -52,8 +52,8 @@
                         </select>
                     </div>
                     <div class="col-md-3 mb-2">
-                        <button type="submit" class="btn btn-outline-primary">Terapkan Filter</button>
-                        <a href="{{route ('backend.bookings.index')}}" class="btn btn-outline-danger">Semua</a>
+                        <button type="submit" class="btn btn-outline-primary">Terapkan</button>
+                        <a href="{{route ('backend.bookings.index')}}" class="btn btn-outline-danger" style="margin-left:10px;">Tampilkan Semua</a>
                     </div>
                 </div>
             </form>

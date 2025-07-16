@@ -29,7 +29,7 @@
                         @foreach ($jadwals as $jadwal)
                         <tr>
                             <td class="text-center">{{ $loop->iteration }}</td>
-                            <td class="text-center">{{ $jadwal->ruangan->nama }}</td>
+                            <td class="text-center">{{ $jadwal->ruangan->nama }}</td> 
                             <td class="text-center">{{ $jadwal->tanggal_format }}</td>
                             <td class="text-center">{{ $jadwal->jam_mulai }}</td>
                             <td class="text-center">{{ $jadwal->jam_selesai }}</td>

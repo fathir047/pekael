@@ -27,7 +27,7 @@ class UserBookingController extends Controller
             'jam_mulai'   => 'required',
             'jam_selesai' => 'required|after:jam_mulai',
         ]);
-
+ 
         
         $tanggalInput = Carbon::parse($request->tanggal)->format('Y-m-d');
         $hariIni = Carbon::now()->format('Y-m-d');

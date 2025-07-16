@@ -24,7 +24,7 @@ class UsersSeeder extends Seeder
 
             \App\Models\User::create([
                 'name'=>'Member',
-                'email'=>'member@example.com',
+                'email'=>'member@example.com', 
                 'password'=>bcrypt('fathir047'),
                 'is_admin'=>0,
             ]);

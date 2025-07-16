@@ -23,7 +23,7 @@
 
   <!-- Preloader -->
   <div class="preloader">
-    <img src="{{asset('assets/backend/images/logos/favicon.png')}}" alt="loader" class="lds-ripple img-fluid" />
+    <img src="{{asset ('assets/backend/img/dark-logo.png')}}" alt="loader" class="lds-ripple img-fluid" style="width:200px"  />
   </div>
 
   <!-- navbar -->
@@ -58,4 +58,4 @@
   @stack('scripts')
 </body>
 
-</html>
+</html> 

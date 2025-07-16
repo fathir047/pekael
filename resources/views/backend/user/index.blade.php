@@ -17,7 +17,7 @@
                     <thead class="table-head">
                         <tr>
                             <th>No</th>
-                            <th>Name</th>
+                            <th>Name</th> 
                             <th>Email</th>
                             <th>Role</th>
                             <th class="text-center">Actions</th>

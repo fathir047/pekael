@@ -42,6 +42,6 @@
                 <a href="{{ route('backend.user.index') }}" class="btn btn-outline-danger">Cancel</a>
             </form>
         </div>
-    </div>
+    </div> 
 </div>
 @endsection

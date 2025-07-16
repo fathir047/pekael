@@ -10,7 +10,7 @@
         <div class="card-body">
             <form action="{{ route('backend.bookings.store') }}" method="POST">
                 @csrf
-
+  
                 <div class="mb-3">
                     <label for="user_id" class="form-label">Pengguna</label>
                     <select name="user_id" class="form-select">

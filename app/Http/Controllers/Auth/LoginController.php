@@ -31,7 +31,7 @@ class LoginController extends Controller
         if (Auth::user()->is_admin == 1) {
             return '/admin'; // atau '/admin'
         }
-        return '/';
+        return '/'; 
     }
 
 

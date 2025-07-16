@@ -15,7 +15,7 @@
                         <label class="form-label">Ruangan</label>
                         <input type="text" class="form-control" value="{{ $jadwal->ruangan->nama }}" disabled>
                     </div>
-
+ 
                     {{-- Tanggal --}}
                     <div class="mb-3">
                         <label class="form-label">Tanggal</label>

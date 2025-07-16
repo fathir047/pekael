@@ -21,5 +21,5 @@ class Admin
         } else {
             return abort(403, 'Akses ditolak!');     
         }
-    }
+    } 
 }

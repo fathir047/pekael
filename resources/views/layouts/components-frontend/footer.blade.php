@@ -13,7 +13,7 @@
                   Fathir Yanuar
                 </a>
             </h3>
-          </div>
+          </div> 
           <div class="col-md-8 col-6">
             <h3 class="fs-4 fw-semibold mb-7">Group By: Kelompok 10</h3>
             <ul class="d-flex flex-column gap-9">

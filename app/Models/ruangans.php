@@ -13,7 +13,7 @@ class ruangans extends Model
     {
         return $this->hasMany(bookings::class);
     }
-
+ 
     public function jadwals()
     {
         return $this->hasMany(jadwals::class);

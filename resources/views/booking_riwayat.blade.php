@@ -28,7 +28,7 @@
                                     @case('Pending')
                                         <span class="badge bg-light text-dark">Menunggu</span>
                                         @break
-                                    @case('Diterima')
+                                    @case('Diterima') 
                                         <span class="badge bg-primary">Disetujui</span>
                                         @break
                                     @case('Ditolak')

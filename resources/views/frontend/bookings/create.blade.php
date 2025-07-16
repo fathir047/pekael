@@ -10,7 +10,7 @@
                         <i class="bi bi-calendar-check-fill me-2"></i>
                         Form Booking Ruangan
                     </h5>
-                </div>
+                </div> 
 
                 <div class="card-body p-4">
                     <form action="{{ route('frontend.bookings.store') }}" method="POST">

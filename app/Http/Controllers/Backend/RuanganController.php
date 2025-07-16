@@ -98,7 +98,7 @@ class RuanganController extends Controller
         $ruangan = ruangans::findOrFail($id);
         Storage::disk('public')->delete($ruangan->cover);
         $ruangan->delete();
-
+ 
         toast('Data ruangan berhasil dihapus.', 'success');
         return redirect()->route('backend.ruangan.index');
     }

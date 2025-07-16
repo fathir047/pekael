@@ -35,7 +35,7 @@
     <h2>Laporan Data Booking Ruangan</h2>
 
     <table>
-        <thead>
+        <thead> 
             <tr>
                 <th>No</th>
                 <th>Nama User</th>
