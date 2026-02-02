@@ -1,18 +1,16 @@
 <?php
-
 namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
 use App\Models\bookings;
-use App\Models\ruangans;
 use App\Models\jadwals;
+use App\Models\ruangans;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Carbon\Carbon;
 
 class UserBookingController extends Controller
 {
-
     public function create()
     {
         $ruangans = ruangans::all();
@@ -21,27 +19,31 @@ class UserBookingController extends Controller
 
     public function store(Request $request)
     {
+        // Validasi awal
         $request->validate([
             'ruang_id'    => 'required|exists:ruangans,id',
             'tanggal'     => 'required|date',
             'jam_mulai'   => 'required',
             'jam_selesai' => 'required|after:jam_mulai',
         ]);
- 
-        
-        $tanggalInput = Carbon::parse($request->tanggal)->format('Y-m-d');
-        $hariIni = Carbon::now()->format('Y-m-d');
 
-        if ($tanggalInput === $hariIni) {
-            $jamSelesai = Carbon::parse($request->tanggal . ' ' . $request->jam_selesai);
-            if ($jamSelesai->lt(Carbon::now())) {
-                return back()
-                    ->withInput()
-                    ->with('error', 'Waktu booking sudah lewat. Silakan pilih waktu yang valid.');
-            }
+        $tanggalBooking    = Carbon::parse($request->tanggal);
+        $jamMulaiBooking   = Carbon::parse($request->tanggal . ' ' . $request->jam_mulai);
+        $jamSelesaiBooking = Carbon::parse($request->tanggal . ' ' . $request->jam_selesai);
+
+        // Cek tanggal tidak boleh lewat
+        if ($tanggalBooking->lt(Carbon::today())) {
+            toast('Tanggal booking sudah lewat. Silakan pilih tanggal yang valid.', 'error');
+            return back()->withInput();
         }
 
-        //  boking => boking bentrok
+        // Jika booking hari ini, cek jam mulai tidak boleh lewat
+        if ($tanggalBooking->isToday() && $jamMulaiBooking->lt(Carbon::now())) {
+            toast('Jam mulai booking sudah lewat. Silakan pilih jam yang valid.', 'error');
+            return back()->withInput();
+        }
+
+        // Cek bentrok dengan booking lain
         $cekBentrok = bookings::where('ruang_id', $request->ruang_id)
             ->where('tanggal', $request->tanggal)
             ->where(function ($query) use ($request) {
@@ -49,37 +51,35 @@ class UserBookingController extends Controller
                     ->orWhereBetween('jam_selesai', [$request->jam_mulai, $request->jam_selesai])
                     ->orWhere(function ($q) use ($request) {
                         $q->where('jam_mulai', '<=', $request->jam_mulai)
-                        ->where('jam_selesai', '>=', $request->jam_selesai);
+                            ->where('jam_selesai', '>=', $request->jam_selesai);
                     });
             })
             ->exists();
 
         if ($cekBentrok) {
-            toast('Jadwal ada yang boking !!', 'error');
+            toast('Jadwal ada yang booking!', 'error');
             return back()->withInput();
         }
 
-
-        // bentrok dengan jadwal tetap
+        // Cek bentrok dengan jadwal tetap
         $bentrokJadwal = jadwals::where('ruang_id', $request->ruang_id)
-            ->where('tanggal', $request->tanggal) // cek tanggal yang sama
+            ->where('tanggal', $request->tanggal)
             ->where(function ($data) use ($request) {
-                $data
-                    ->whereBetween('jam_mulai', [$request->jam_mulai, $request->jam_selesai])
+                $data->whereBetween('jam_mulai', [$request->jam_mulai, $request->jam_selesai])
                     ->orWhereBetween('jam_selesai', [$request->jam_mulai, $request->jam_selesai])
                     ->orWhere(function ($jadwal) use ($request) {
-                        $jadwal->where('jam_mulai', '<=', $request->jam_mulai)->where('jam_selesai', '>=', $request->jam_selesai);
+                        $jadwal->where('jam_mulai', '<=', $request->jam_mulai)
+                            ->where('jam_selesai', '>=', $request->jam_selesai);
                     });
             })
             ->exists();
 
         if ($bentrokJadwal) {
-            toast('bentrok dengan jadwal tetap !!', 'error');
+            toast('Bentrok dengan jadwal tetap!', 'error');
             return back()->withInput();
         }
 
-
-        // waktu kosong harus 30 menit
+        // Cek jeda minimal 30 menit
         $lastBooking = bookings::where('ruang_id', $request->ruang_id)
             ->where('tanggal', $request->tanggal)
             ->where('jam_selesai', '<=', $request->jam_mulai)
@@ -88,17 +88,14 @@ class UserBookingController extends Controller
 
         if ($lastBooking) {
             $lastEnd = Carbon::parse($request->tanggal . ' ' . $lastBooking->jam_selesai);
-            $newStart = Carbon::parse($request->tanggal . ' ' . $request->jam_mulai);
-
-            if ($lastEnd->gt($newStart->subMinutes(30))) {
+            if ($lastEnd->gt($jamMulaiBooking->subMinutes(30))) {
                 toast('Harus ada jeda minimal 30 menit setelah pemakaian sebelumnya!', 'error');
-                return back()->withInput()->with('error', 'Harus ada jeda minimal 30 menit setelah pemakaian sebelumnya!');
+                return back()->withInput();
             }
         }
 
-    
-
-        $booking = new bookings();
+        // Simpan booking
+        $booking              = new bookings();
         $booking->user_id     = Auth::id();
         $booking->ruang_id    = $request->ruang_id;
         $booking->tanggal     = $request->tanggal;
@@ -107,22 +104,22 @@ class UserBookingController extends Controller
         $booking->status      = 'Pending';
         $booking->save();
 
-        toast('Kalem dagoan', 'success');
+        toast('Booking berhasil! Tunggu ya.', 'success');
         return redirect()->route('bookings.create');
     }
 
     public function riwayat()
-{
-    $booking = bookings::where('user_id', Auth::id())
-        ->orderBy('tanggal', 'desc')
-        ->get()
-        ->map(function ($item) {
-            $item->tanggal_format = Carbon::parse($item->tanggal)->translatedFormat('l, j F Y');
-            return $item;
-        });
+    {
+        $booking = bookings::where('user_id', Auth::id())
+            ->orderBy('tanggal', 'desc')
+            ->get()
+            ->map(function ($item) {
+                $item->tanggal_format = Carbon::parse($item->tanggal)->translatedFormat('l, j F Y');
+                return $item;
+            });
 
-    return view('booking_riwayat', compact('booking'));
-}
+        return view('booking_riwayat', compact('booking'));
+    }
 
     public function show()
     {
