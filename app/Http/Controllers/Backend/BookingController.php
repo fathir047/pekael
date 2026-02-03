@@ -13,14 +13,21 @@ use Barryvdh\DomPDF\Facade\Pdf;
 
 class BookingController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
 
+    /* ===============================
+        EXPORT PDF
+    ================================ */
     public function export()
-    {   
-        $filter = bookings::with(['User', 'ruangan']);
+    {
+        $filter = bookings::with(['user', 'ruangan']);
 
         if (request()->filled('ruang_id')) {
             $filter->where('ruang_id', request('ruang_id'));
-        } 
+        }
 
         if (request()->filled('tanggal')) {
             $filter->where('tanggal', request('tanggal'));
@@ -28,56 +35,60 @@ class BookingController extends Controller
 
         if (request()->filled('status')) {
             $filter->where('status', request('status'));
-        } 
+        }
 
         $bookings = $filter->orderBy('status')->get();
 
-        $pdf = Pdf::loadView('backend.bookings.pdfbookings', ['bookings' => $bookings]);
+        $pdf = Pdf::loadView('backend.bookings.pdfbookings', compact('bookings'));
         return $pdf->download('laporan-data-bookings.pdf');
     }
 
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
-
+    /* ===============================
+        INDEX
+    ================================ */
     public function index(Request $request)
     {
-
+        // Auto set selesai
         bookings::where(function ($query) {
-            $query->where('tanggal', '<', now()->toDateString())->orWhere(function ($q) 
-            {$q->where('tanggal', now()->toDateString())->where('jam_selesai', '<', now()->format('H:i:s'));         
-        });
-
+            $query->where('tanggal', '<', now()->toDateString())
+                ->orWhere(function ($q) {
+                    $q->where('tanggal', now()->toDateString())
+                      ->where('jam_selesai', '<', now()->format('H:i:s'));
+                });
         })
         ->where('status', '!=', 'Selesai')
         ->update(['status' => 'Selesai']);
 
-        //mengambil filter
-        $query = bookings::with(['ruangan', 'user'])->orderBy('tanggal', 'desc');
+        // Filter data
+        $query = bookings::with(['ruangan', 'user'])
+            ->orderBy('tanggal', 'desc');
 
         if ($request->filled('ruang_id')) {
             $query->where('ruang_id', $request->ruang_id);
         }
+
         if ($request->filled('tanggal')) {
             $query->whereDate('tanggal', $request->tanggal);
         }
+
         if ($request->filled('status')) {
             $query->where('status', $request->status);
         }
 
-        // format tanggal
-        $bookings = $query->get()->map(function($booking) {
-            $booking->tanggal_format = Carbon::parse($booking->tanggal)->translatedFormat('l, j F Y');
+        $bookings = $query->get()->map(function ($booking) {
+            $booking->tanggal_format =
+                Carbon::parse($booking->tanggal)->translatedFormat('l, j F Y');
             return $booking;
         });
 
         $ruangans = ruangans::all();
 
-        confirmDelete('Hapus Booking', 'Apakah Anda yakin ingin menghapus booking ini?');
         return view('backend.bookings.index', compact('bookings', 'ruangans'));
     }
 
+    /* ===============================
+        CREATE
+    ================================ */
     public function create()
     {
         $ruangans = ruangans::all();
@@ -85,72 +96,54 @@ class BookingController extends Controller
         return view('backend.bookings.create', compact('ruangans', 'users'));
     }
 
+    /* ===============================
+        STORE
+    ================================ */
     public function store(Request $request)
     {
-
-        // jam terlewat
-        $tanggalInput = Carbon::parse($request->tanggal)->format('Y-m-d');
-        $hariIni = Carbon::now()->format('Y-m-d');
-
-        if ($tanggalInput === $hariIni) {
+        // Jam terlewat
+        if ($request->tanggal == now()->toDateString()) {
             $jamSelesai = Carbon::parse($request->tanggal . ' ' . $request->jam_selesai);
-            if ($jamSelesai->lt(Carbon::now())) {
-                toast('jam udah kelewat !!', 'error');
-                return back()->withInput()->with('error', 'Waktu booking sudah lewat. Silakan pilih waktu yang valid.');
+            if ($jamSelesai->lt(now())) {
+                toast('Jam sudah terlewat!', 'error');
+                return back()->withInput();
             }
         }
 
-        //  boking => boking bentrok
+        // Bentrok booking
         $cekBentrok = bookings::where('ruang_id', $request->ruang_id)
             ->where('tanggal', $request->tanggal)
-            ->where(function ($query) use ($request) {
-                $query->whereBetween('jam_mulai', [$request->jam_mulai, $request->jam_selesai])
-                    ->orWhereBetween('jam_selesai', [$request->jam_mulai, $request->jam_selesai])
-                    ->orWhere(function ($q) use ($request) {
-                        $q->where('jam_mulai', '<=', $request->jam_mulai)
-                        ->where('jam_selesai', '>=', $request->jam_selesai);
-                    });
+            ->where(function ($q) use ($request) {
+                $q->whereBetween('jam_mulai', [$request->jam_mulai, $request->jam_selesai])
+                  ->orWhereBetween('jam_selesai', [$request->jam_mulai, $request->jam_selesai])
+                  ->orWhere(function ($sub) use ($request) {
+                      $sub->where('jam_mulai', '<=', $request->jam_mulai)
+                          ->where('jam_selesai', '>=', $request->jam_selesai);
+                  });
             })
             ->exists();
 
         if ($cekBentrok) {
-            toast('Jadwal booking bentrok !!', 'error');
+            toast('Jadwal booking bentrok!', 'error');
             return back()->withInput();
         }
 
-        // bentrok dengan jadwal tetap
+        // Bentrok jadwal tetap
         $bentrokJadwal = jadwals::where('ruang_id', $request->ruang_id)
-            ->where('tanggal', $request->tanggal) // cek tanggal yang sama
-            ->where(function ($data) use ($request) {
-                $data
-                    ->whereBetween('jam_mulai', [$request->jam_mulai, $request->jam_selesai])
-                    ->orWhereBetween('jam_selesai', [$request->jam_mulai, $request->jam_selesai])
-                    ->orWhere(function ($jadwal) use ($request) {
-                        $jadwal->where('jam_mulai', '<=', $request->jam_mulai)->where('jam_selesai', '>=', $request->jam_selesai);
-                    });
+            ->where('tanggal', $request->tanggal)
+            ->where(function ($q) use ($request) {
+                $q->whereBetween('jam_mulai', [$request->jam_mulai, $request->jam_selesai])
+                  ->orWhereBetween('jam_selesai', [$request->jam_mulai, $request->jam_selesai])
+                  ->orWhere(function ($sub) use ($request) {
+                      $sub->where('jam_mulai', '<=', $request->jam_mulai)
+                          ->where('jam_selesai', '>=', $request->jam_selesai);
+                  });
             })
             ->exists();
 
         if ($bentrokJadwal) {
-            toast('bentrok dengan jadwal tetap !!', 'error');
+            toast('Bentrok dengan jadwal tetap!', 'error');
             return back()->withInput();
-        }
-
-        // waktu kosong harus 30 menit
-        $lastBooking = bookings::where('ruang_id', $request->ruang_id)
-            ->where('tanggal', $request->tanggal)
-            ->where('jam_selesai', '<=', $request->jam_mulai)
-            ->orderBy('jam_selesai', 'desc')
-            ->first();
-
-        if ($lastBooking) {
-            $lastEnd = Carbon::parse($request->tanggal . ' ' . $lastBooking->jam_selesai);
-            $newStart = Carbon::parse($request->tanggal . ' ' . $request->jam_mulai);
-
-            if ($lastEnd->gt($newStart->subMinutes(30))) {
-                toast('Harus ada jeda minimal 30 menit setelah pemakaian sebelumnya!', 'error');
-                return back()->withInput()->with('error', 'Harus ada jeda minimal 30 menit setelah pemakaian sebelumnya!');
-            }
         }
 
         $request->validate([
@@ -161,133 +154,55 @@ class BookingController extends Controller
             'jam_selesai' => 'required|after:jam_mulai',
         ]);
 
-        $booking = new bookings;
-        $booking->user_id     = $request->user_id;
-        $booking->ruang_id    = $request->ruang_id;
-        $booking->tanggal     = $request->tanggal;
-        $booking->jam_mulai   = $request->jam_mulai;
-        $booking->jam_selesai = $request->jam_selesai;
-        $booking->status      = 'Pending';
-        $booking->save();
+        bookings::create([
+            'user_id'     => $request->user_id,
+            'ruang_id'    => $request->ruang_id,
+            'tanggal'     => $request->tanggal,
+            'jam_mulai'   => $request->jam_mulai,
+            'jam_selesai' => $request->jam_selesai,
+            'status'      => 'Pending',
+        ]);
 
-        toast('Booking berhasil ditambahkan.', 'success');
+        toast('Booking berhasil ditambahkan', 'success');
         return redirect()->route('backend.bookings.index');
-
     }
 
+    /* ===============================
+        UPDATE STATUS (INDEX)
+    ================================ */
+    public function updateStatus(Request $request, $id)
+    {
+        $request->validate([
+            'status' => 'required|in:Pending,Diterima,Ditolak,Selesai'
+        ]);
+
+        $booking = bookings::findOrFail($id);
+        $booking->status = $request->status;
+        $booking->save();
+
+        toast('Status booking berhasil diperbarui', 'success');
+        return back();
+    }
+
+    /* ===============================
+        SHOW
+    ================================ */
     public function show($id)
     {
         $booking = bookings::with(['ruangan', 'user'])->findOrFail($id);
-        $booking->tanggal_format = Carbon::parse($booking->tanggal)->translatedFormat('l, j F Y');
+        $booking->tanggal_format =
+            Carbon::parse($booking->tanggal)->translatedFormat('l, j F Y');
+
         return view('backend.bookings.show', compact('booking'));
     }
 
-    public function edit($id)
-    {
-        $booking = bookings::findOrFail($id);
-        $ruangans = ruangans::all();
-        $users = User::all();
-        return view('backend.bookings.edit', compact('booking', 'ruangans', 'users'));
-    }
-
-    public function update(Request $request, $id)
-    {
-
-        // jam terlewat
-        $tanggalInput = Carbon::parse($request->tanggal)->format('Y-m-d');
-        $hariIni = Carbon::now()->format('Y-m-d');
-
-        if ($tanggalInput === $hariIni) {
-            $jamSelesai = Carbon::parse($request->tanggal . ' ' . $request->jam_selesai);
-            if ($jamSelesai->lt(Carbon::now())) {
-
-                toast('jam udah kelewat!!', 'error');
-                return back()->withInput()->with('error', 'Waktu booking sudah lewat. Silakan pilih waktu yang valid.');
-            }
-        }
-
-         //  boking => boking bentrok
-        $cekBentrok = bookings::where('ruang_id', $request->ruang_id)
-            ->where('tanggal', $request->tanggal)
-            ->where('id', '!=', $id)
-            ->where(function ($query) use ($request) {
-                $query->whereBetween('jam_mulai', [$request->jam_mulai, $request->jam_selesai])
-                    ->orWhereBetween('jam_selesai', [$request->jam_mulai, $request->jam_selesai])
-                    ->orWhere(function ($q) use ($request) {
-                        $q->where('jam_mulai', '<=', $request->jam_mulai)
-                        ->where('jam_selesai', '>=', $request->jam_selesai);
-                    });
-            })
-            ->exists();
-
-        if ($cekBentrok) {
-            toast('Jadwal booking bentrok !!', 'error');
-            return back()->withInput();
-        }
-
-        // bentrok dengan jadwal tetap
-        $bentrokJadwal = jadwals::where('ruang_id', $request->ruang_id)
-            ->where('tanggal', $request->tanggal) // cek tanggal yang sama
-            ->where(function ($data) use ($request) {
-                $data
-                    ->whereBetween('jam_mulai', [$request->jam_mulai, $request->jam_selesai])
-                    ->orWhereBetween('jam_selesai', [$request->jam_mulai, $request->jam_selesai])
-                    ->orWhere(function ($jadwal) use ($request) {
-                        $jadwal->where('jam_mulai', '<=', $request->jam_mulai)->where('jam_selesai', '>=', $request->jam_selesai);
-                    });
-            })
-            ->exists();
-
-        if ($bentrokJadwal) {
-            toast('bentrok dengan jadwal tetap !!', 'error');
-            return back()->withInput();
-        }
-
-        // waktu kosong harus 30 menit
-        $lastBooking = bookings::where('ruang_id', $request->ruang_id)
-            ->where('tanggal', $request->tanggal)
-            ->where('jam_selesai', '<=', $request->jam_mulai)
-            ->orderBy('jam_selesai', 'desc')
-            ->first();
-
-        if ($lastBooking) {
-            $lastEnd = Carbon::parse($request->tanggal . ' ' . $lastBooking->jam_selesai);
-            $newStart = Carbon::parse($request->tanggal . ' ' . $request->jam_mulai);
-
-            if ($lastEnd->gt($newStart->subMinutes(30))) {
-                toast('Harus ada jeda minimal 30 menit setelah pemakaian sebelumnya!', 'error');
-                return back()->withInput()->with('error', 'Harus ada jeda minimal 30 menit setelah pemakaian sebelumnya!');
-            }
-        }
-
-        $request->validate([
-            'user_id'     => 'required|exists:users,id',
-            'ruang_id'    => 'required|exists:ruangans,id',
-            'tanggal'     => 'required|date',
-            'jam_mulai'   => 'required',
-            'jam_selesai' => 'required|after:jam_mulai',
-            'status'      => 'required|in:Pending,Diterima,Ditolak,Selesai',
-        ]);
-
-        $booking = bookings::findOrFail($id);
-        $booking->user_id     = $request->user_id;
-        $booking->ruang_id    = $request->ruang_id;
-        $booking->tanggal     = $request->tanggal;
-        $booking->jam_mulai   = $request->jam_mulai;
-        $booking->jam_selesai = $request->jam_selesai;
-        $booking->status      = $request->status;
-        $booking->save();
-
-        toast('Booking berhasil diperbarui.', 'success');
-        return redirect()->route('backend.bookings.index');
-    }
-
+    /* ===============================
+        DESTROY
+    ================================ */
     public function destroy($id)
     {
-        $booking = bookings::findOrFail($id);
-        $booking->delete();
-
-        toast('Booking berhasil dihapus.', 'success');
-        return redirect()->route('backend.bookings.index');
+        bookings::findOrFail($id)->delete();
+        toast('Booking berhasil dihapus', 'success');
+        return back();
     }
 }

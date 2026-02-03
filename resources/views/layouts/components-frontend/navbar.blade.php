@@ -18,7 +18,7 @@
 
       <!-- Logo -->
       <a class="navbar-brand fw-bold text-primary" href="{{ url('/') }}">
-        <img src="{{ asset('assets/backend/img/navuser.png') }}" alt="Logo" style="height: 40px;">
+        <img src="{{ asset('assets/backend/img/nav_user.png') }}" alt="Logo" style="height: 40px;">
       </a>
 
       <!-- Toggle Button (Mobile) -->
@@ -56,7 +56,7 @@
               <a class="nav-link dropdown-toggle text-dark" href="#" role="button" data-bs-toggle="dropdown">
                 {{ Auth::user()->name }}
               </a>
-              <ul class="dropdown-menu dropdown-menu-end"> 
+              <ul class="dropdown-menu dropdown-menu-end">
                 <li>
                   <a class="dropdown-item text-danger" href="{{ route('logout') }}"
                      onclick="event.preventDefault(); document.getElementById('logout-form').submit();">

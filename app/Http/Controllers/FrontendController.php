@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Bookings;
-use App\Models\Jadwals;
+use App\Models\bookings;
+use App\Models\jadwals;
 use App\Models\ruangans;
 
 class FrontendController extends Controller
 {
+
     public function index()
     {
         $bookings = Bookings::with('ruangan')->get();
@@ -29,7 +30,7 @@ class FrontendController extends Controller
                 'title' => 'Jadwal - ' . ($jadwal->ruangan->nama ?? 'Tanpa Ruangan'),
                 'start' => $jadwal->tanggal . 'T' . $jadwal->jam_mulai,
                 'end' => $jadwal->tanggal . 'T' . $jadwal->jam_selesai,
-                'color' => '#3498db', 
+                'color' => '#3498db',
             ];
         }
 
@@ -45,5 +46,5 @@ class FrontendController extends Controller
     {
         $ruangan = ruangans::findOrFail($id);
         return view('ruangan_detail', compact('ruangan'));
-    }       
+    }
 }

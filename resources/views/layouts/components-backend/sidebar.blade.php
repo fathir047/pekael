@@ -4,14 +4,14 @@
         <!-- Start Vertical Layout Sidebar -->
         <!-- ---------------------------------- -->
         <div class="brand-logo d-flex align-items-center justify-content-between">
-            <a href="/main/index.html" class="text-nowrap logo-img">
-            <img src="/assets/backend/img/dark-logo.png" class="dark-logo" height="53px" alt="Logo-Dark" />
-            <img src="/assets/backend/img/light-logo.png" class="light-logo"  height="70px" alt="Logo-light" style="margin-left: 5px;"/>
-          </a>
+            <i href="/main/index.html" class="text-nowrap logo-img">
+            <img src="/assets/backend/img/dark-logo.png" class="dark-logo" height="30px" alt="Logo-Dark"/>
+            <img src="/assets/backend/img/light-logo.png" class="light-logo"  height="30px" alt="Logo-light">
+            </i>
             <a href="javascript:void(0)" class="sidebartoggler ms-auto text-decoration-none fs-5 d-block d-xl-none">
                 <i class="ti ti-x"></i>
             </a>
-        </div> 
+        </div>
 
         <nav class="sidebar-nav scroll-sidebar" data-simplebar>
             <ul id="sidebarnav">
@@ -32,7 +32,7 @@
                         <span class="hide-menu">User</span>
                     </a>
                 </li>
-                <li class="sidebar-item">       
+                <li class="sidebar-item">
                     <a class="sidebar-link" href="{{ route('backend.ruangan.index') }}" aria-expanded="false">
                         <span>
                             <i class="ti ti-door"></i>
@@ -40,15 +40,15 @@
                         <span class="hide-menu">Ruangan</span>
                     </a>
                 </li>
-                  <li class="sidebar-item">       
+                  <li class="sidebar-item">
                     <a class="sidebar-link" href="{{ route('backend.jadwal.index') }}" aria-expanded="false">
                        <span>
                             <i class="ti ti-calendar"></i>
                         </span>
-                        <span class="hide-menu">Jadwal</span>
+                        <span class="hide-menu">Jadwal Tetap</span>
                     </a>
                 </li>
-                  <li class="sidebar-item">       
+                  <li class="sidebar-item">
                     <a class="sidebar-link" href="{{ route('backend.bookings.index') }}" aria-expanded="false">
                         <span>
                             <i class="ti ti-bookmark"></i>
