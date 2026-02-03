@@ -149,30 +149,46 @@
 }
 </style>
 
-{{-- ================= FULLCALENDAR ================= --}}
+<!-- FullCalendar CSS & JS -->
 <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.10/index.global.min.css" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.10/index.global.min.js"></script>
 
+<!-- FullCalendar Init Script -->
 <script>
-document.addEventListener('DOMContentLoaded', function () {
+  document.addEventListener('DOMContentLoaded', function () {
     const calendarEl = document.getElementById('calendar');
-
     const calendar = new FullCalendar.Calendar(calendarEl, {
-        initialView: 'dayGridMonth',
-        height: 'auto',
-        aspectRatio: 1.6,
-        headerToolbar: {
-            left: 'prev,next today',
-            center: 'title',
-            right: 'dayGridMonth,listMonth'
-        },
-        events: @json($jadwal),
-        eventDisplay: 'block',
-        eventTextColor: '#fff'
+      initialView: 'dayGridMonth',
+      locale: 'id',
+      height: 'auto',
+      aspectRatio: 1.6,
+      headerToolbar: {
+        left: 'prev,next today',
+        center: 'title',
+        right: 'dayGridMonth,listMonth'
+      },
+      buttonText: {
+        today: 'Hari Ini',
+        month: 'Bulan',
+        listMonth: 'List'
+      },
+      events: @json($jadwal),
+      eventDisplay: 'block',
+      eventTextColor: '#fff',
+      eventDidMount: function (info) {
+        if (info.event.extendedProps.description) {
+          new bootstrap.Tooltip(info.el, {
+            title: info.event.extendedProps.description,
+            placement: 'top',
+            trigger: 'hover',
+            container: 'body',
+            html: true,
+          });
+        }
+      }
     });
-
     calendar.render();
-});
+  });
 </script>
 
 @endsection

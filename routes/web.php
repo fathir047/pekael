@@ -5,11 +5,14 @@ use App\Http\Controllers\Backend\RuanganController;
 use App\Http\Controllers\Backend\UserController;
 use App\Http\Controllers\BackendController;
 use App\Http\Controllers\Backend\JadwalController;
+use App\Http\Controllers\Backend\ImportUserController;
 use App\Http\Controllers\FrontendController;
 use App\Http\Controllers\User\UserBookingController;
 use App\Http\Middleware\Admin;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
+
+
 
 
 
@@ -32,6 +35,8 @@ Route::group(['prefix' => 'admin', 'as' => 'backend.', 'middleware' => ['auth', 
     Route::resource('/bookings', BookingController::class);
     Route::get('bookings-export', [BookingController::class, 'export'])->name('bookings.export');
     Route::put('/bookings/{id}/update-status',[BookingController::class, 'updateStatus'])->name('bookings.update-status');
+    Route::post('/users/import', [ImportUserController::class, 'import'])->name('users.import');
+
 });
 
 

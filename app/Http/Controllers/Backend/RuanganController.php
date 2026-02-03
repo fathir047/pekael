@@ -49,7 +49,7 @@ class RuanganController extends Controller
         $ruangan->fasilitas = $request->fasilitas;
         $ruangan->save();
 
-        toast('Ges ka tambah tah', 'success');
+        toast('ruang berhasil dibuat', 'success');
         return redirect()->route('backend.ruangan.index');
     }
 
