@@ -26,7 +26,7 @@
                             <label class="form-label fw-semibold">Ruangan</label>
                             <select name="ruang_id" class="form-select form-select-lg" required>
                                 <option disabled selected>-- Pilih Ruangan --</option>
-                                @foreach ($ruangans as $data)
+                                @foreach ($ruangans as $data    )
                                     <option value="{{ $data->id }}"
                                         {{ request('ruang_id') == $data->id || old('ruang_id') == $data->id ? 'selected' : '' }}>
                                         {{ $data->nama }}

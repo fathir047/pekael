@@ -59,10 +59,17 @@
             </ul>
         </nav>
 
+        {{-- inisial di pp --}}
+        @php
+            $name = Auth::user()->name;
+            $initial = strtoupper(substr($name, 0, 1));
+        @endphp
+
         <div class="fixed-profile p-3 mx-4 mb-2 bg-secondary-subtle rounded mt-3">
             <div class="hstack gap-3">
-                <div class="john-img">
-                    <img src="{{asset('/assets/backend/img/pp.jpeg')}}" class="rounded-circle" width="40" height="40" alt="modernize-img" />
+                <div class="rounded-circle bg-primary text-white d-flex align-items-center justify-content-center"
+                    style="width:35px;height:35px;font-size:14px;font-weight:600;">
+                    {{ $initial }}
                 </div>
                 <div class="john-title">
                     <h6 class="mb-0 fs-4 fw-semibold">{{Auth::user()->name}}</h6>

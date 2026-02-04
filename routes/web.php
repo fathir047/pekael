@@ -36,7 +36,6 @@ Route::group(['prefix' => 'admin', 'as' => 'backend.', 'middleware' => ['auth', 
     Route::get('bookings-export', [BookingController::class, 'export'])->name('bookings.export');
     Route::put('/bookings/{id}/update-status',[BookingController::class, 'updateStatus'])->name('bookings.update-status');
     Route::post('/users/import', [ImportUserController::class, 'import'])->name('users.import');
-
 });
 
 

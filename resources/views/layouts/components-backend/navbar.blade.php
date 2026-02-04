@@ -35,34 +35,51 @@
               </a>
             </li>
 
+            {{-- inisial di pp --}}
+            @php
+                $name = Auth::user()->name;
+                $initial = strtoupper(substr($name, 0, 1));
+            @endphp
+
             <!-- profile -->
             <li class="nav-item dropdown">
               <a class="nav-link pe-0" href="javascript:void(0)" id="drop1" aria-expanded="false">
                 <div class="d-flex align-items-center">
-                  <div class="user-profile-img">
-                    <img src="{{asset('/assets/backend/img/pp.jpeg')}}" class="rounded-circle" width="35" height="35" alt="modernize-img" />
-                  </div>
+                    <div class="user-profile-img">
+                        <div class="rounded-circle bg-primary text-white d-flex align-items-center justify-content-center"
+                            style="width:35px;height:35px;font-size:14px;font-weight:600;">
+                            {{ $initial }}
+                        </div>
+                    </div>
                 </div>
-              </a> 
+              </a>
               <div class="dropdown-menu content-dd dropdown-menu-end dropdown-menu-animate-up" aria-labelledby="drop1">
                 <div class="profile-dropdown position-relative" data-simplebar>
                   <div class="py-3 px-7 pb-0">
                     <h5 class="mb-0 fs-5 fw-semibold">User Profile</h5>
                   </div>
-                  <div class="d-flex align-items-center py-9 mx-7 border-bottom">
-                    <img src="{{asset('/assets/backend/img/pp.jpeg')}}" class="rounded-circle" width="80" height="80" alt="modernize-img" />
-                    <div class="ms-3">
-                      <h5 class="mb-1 fs-3">{{ Auth::user()-> is_admin == 1 ? Auth::user()->name : '' }}</h5>
-                      <span class="mb-1 d-block">{{ Auth::user()-> is_admin == 1 ? 'admin' : '' }}</span>
-                      <p class="mb-0 d-flex align-items-center gap-2">
-                        <i class="ti ti-mail fs-4"></i> {{ Auth::user()->email }}
-                      </p>
+                    <div class="d-flex align-items-center py-9 mx-7 border-bottom">
+                        <div class="rounded-circle bg-primary text-white d-flex align-items-center justify-content-center"
+                            style="width:80px;height:80px;font-size:32px;font-weight:bold;">
+                            {{ $initial }}
+                        </div>
+
+                        <div class="ms-3">
+                            <h5 class="mb-1 fs-3">
+                                {{ Auth::user()->is_admin == 1 ? Auth::user()->name : '' }}
+                            </h5>
+                            <span class="mb-1 d-block">
+                                {{ Auth::user()->is_admin == 1 ? 'Admin' : '' }}
+                            </span>
+                            <p class="mb-0 d-flex align-items-center gap-2">
+                                <i class="ti ti-mail fs-4"></i> {{ Auth::user()->email }}
+                            </p>
+                        </div>
                     </div>
-                  </div>
-                  
+
                   <div class="d-grid py-4 px-7 pt-8">
                     <a href="{{ route('logout') }}"
-                      onclick="event.preventDefault(); document.getElementById('logout-form').submit()" 
+                      onclick="event.preventDefault(); document.getElementById('logout-form').submit()"
                       class="btn btn-outline-primary" tabindex="0" type="button" aria-label="logout" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="logout">
                       Logout
                     </a>

@@ -15,11 +15,12 @@
 
   <title>Admin</title>
   <!-- Owl Carousel  -->
-  <link rel="stylesheet" href="{{ asset('assets/backend/libs/owl.carousel/dist/assets/owl.carousel.min.css')}}" />
+  <link rel="stylesheet" href="{{ asset('assets/backend/libs/owl.carousel/dist/assets/owl.carousel.min.css')}}"/>
+  @stack('css')
 </head>
 
 <body>
- 
+
   <!-- Preloader -->
   <div class="preloader">
       <img src="{{ asset('/assets/backend/img/dark-logo.png')}}" alt="loader" class="lds-ripple img-fluid" style="width:200px" />
@@ -31,7 +32,7 @@
     <div class="page-wrapper">
       <!--  Header Start -->
             @include    ('layouts.components-backend.navbar')
-      <!--  Header End --> 
+      <!--  Header End -->
 
       <div class="body-wrapper">
          @yield('content')
@@ -53,13 +54,13 @@
   <script src="{{ asset('assets/backend/js/theme/sidebarmenu.js')}}"></script>
 
   <!-- solar icons -->
-  <script src="https://cdn.js')}}delivr.net/npm/iconify-icon@1.0.8/dist/iconify-icon.min.js')}}"></script>
+  <script src="https://cdn.jsdelivr.net/npm/iconify-icon@1.0.8/dist/iconify-icon.min.js"></script>
   <script src="{{ asset('assets/backend/libs/owl.carousel/dist/owl.carousel.min.js')}}"></script>
   <script src="{{ asset('assets/backend/libs/apexcharts/dist/apexcharts.min.js')}}"></script>
   <script src="{{ asset('assets/backend/js/dashboards/dashboard.js')}}"></script>
 
   @include('sweetalert::alert')
-  @stack('scripts') 
+  @stack('scripts')
   @yield('js')
 </body>
 

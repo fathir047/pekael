@@ -8,6 +8,7 @@ use Maatwebsite\Excel\Facades\Excel;
 
 class ImportUserController extends Controller
 {
+
     public function import(Request $request)
     {
         $request->validate([
