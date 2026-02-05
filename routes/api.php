@@ -1,15 +1,12 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\UserController;
-use App\Http\Controllers\Api\Auth\LoginController;
-
-
+use Illuminate\Support\Facades\Route;
 
 // auth
-Route::post('/login', [LoginController::class, 'login']);
-Route::middleware('auth:sanctum')->post('/logout', [LoginController::class, 'logout']);
-
+Route::post('/login', [AuthController::class, 'login']);
+Route::middleware('auth:sanctum')->post('/logout', [AuthController::class, 'logout']);
 
 // user management
 Route::get('/users', [UserController::class, 'index']);

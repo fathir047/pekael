@@ -1,11 +1,11 @@
 <?php
-
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Laravel\Sanctum\HasApiTokens; // ⬅️ TAMBAH INI
+use Laravel\Sanctum\HasApiTokens;
+// ⬅️ TAMBAH INI
 
 class User extends Authenticatable
 {
@@ -15,7 +15,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
-        // 'is_admin' // kalau kolomnya ada & mau aman, opsional
+        'is_admin',
     ];
 
     protected $hidden = [
@@ -27,7 +27,7 @@ class User extends Authenticatable
     {
         return [
             'email_verified_at' => 'datetime',
-            'password' => 'hashed',
+            'password'          => 'hashed',
         ];
     }
 

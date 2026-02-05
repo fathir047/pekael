@@ -1,23 +1,18 @@
 <?php
-
-namespace App\Http\Controllers\Api\Auth;
+namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class LoginController extends Controller
+class AuthController extends Controller
 {
     public function login(Request $request)
     {
-        $request->validate([
-            'email'    => 'required|email',
-            'password' => 'required'
-        ]);
 
-        if (!Auth::attempt($request->only('email', 'password'))) {
+        if (! Auth::attempt($request->only('email', 'password'))) {
             return response()->json([
-                'message' => 'Email atau password salah'
+                'message' => 'Email atau password salah',
             ], 401);
         }
 
@@ -27,15 +22,15 @@ class LoginController extends Controller
         $token = $user->createToken('api-token')->plainTextToken;
 
         return response()->json([
-            'message' => 'Login berhasil',
-            'user' => [
-                'id' => $user->id,
-                'name' => $user->name,
-                'email' => $user->email,
-                'is_admin' => $user->is_admin
+            'message'  => 'Login berhasil',
+            'user'     => [
+                'id'       => $user->id,
+                'name'     => $user->name,
+                'email'    => $user->email,
+                'is_admin' => $user->is_admin,
             ],
             'redirect' => $user->is_admin == 1 ? '/admin' : '/',
-            'token' => $token
+            'token'    => $token,
         ]);
     }
 
@@ -44,7 +39,7 @@ class LoginController extends Controller
         $request->user()->currentAccessToken()->delete();
 
         return response()->json([
-            'message' => 'Logout berhasil'
+            'message' => 'Logout berhasil',
         ]);
     }
 }
