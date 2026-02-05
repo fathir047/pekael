@@ -9,8 +9,10 @@ use App\Http\Controllers\Backend\ImportUserController;
 use App\Http\Controllers\FrontendController;
 use App\Http\Controllers\User\UserBookingController;
 use App\Http\Middleware\Admin;
-use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
+
+// api
+use Illuminate\Support\Facades\Route;
 
 
 
@@ -49,3 +51,22 @@ Route::middleware(['auth'])->group(function () {
 });
 
 Route::get('/ruangan/{id}', [FrontendController::class, 'ruanganShow'])->name('ruangan.detail');
+
+use App\Models\User;
+
+Route::get('/test', function () {
+    return response()->json([
+        'status' => true,
+        'message' => 'API berhasil jalan'
+    ]);
+});
+
+Route::get('/users', function () {
+    $users = User::select('id', 'name', 'email', 'created_at')->get();
+
+    return response()->json([
+        'status' => true,
+        'data' => $users
+    ]);
+});
+

@@ -12,14 +12,12 @@
                 @csrf
 
                 <!-- PENGGUNA -->
-                <div class="mb-3">
+                <div class="mb-3mb-3 row align-items-center">
                     <label class="form-label">Pengguna</label>
                     <select name="user_id" id="userSelect" class="form-select" required>
-                        <option value="">-- Pilih Pengguna --</option>
+                        <option value="">Pilih Pengguna</option>
                         @foreach ($users as $user)
-                            <option
-                                value="{{ $user->id }}"
-                                data-email="{{ $user->email }}"
+                            <option value="{{ $user->id }}" data-email="{{ $user->email }}"
                                 data-role="{{ $user->is_admin ? 'Admin' : 'User' }}">
                                 {{ $user->name }} - {{ $user->email }}
                             </option>
