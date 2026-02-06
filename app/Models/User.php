@@ -5,11 +5,10 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
-// ⬅️ TAMBAH INI
 
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable; // ⬅️ TAMBAH HasApiTokens
+    use HasApiTokens, HasFactory, Notifiable;
 
     protected $fillable = [
         'name',

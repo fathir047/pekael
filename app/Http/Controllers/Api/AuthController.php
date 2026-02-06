@@ -12,7 +12,7 @@ class AuthController extends Controller
 
         if (! Auth::attempt($request->only('email', 'password'))) {
             return response()->json([
-                'message' => 'Email atau password salah',
+                'message' => 'kamu siapa? ko bisa salah terus loginnya',
             ], 401);
         }
 
