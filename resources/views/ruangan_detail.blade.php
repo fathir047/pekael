@@ -35,10 +35,10 @@
                                     </div>
                                 </div>
                                 
-                                <div class="mb-4">
+                               <div class="mb-4">
                                     <h5 class="mb-3">Fasilitas</h5>
                                     <div class="row g-2">
-                                        @foreach(explode(' ', $ruangan->fasilitas) as $item)
+                                        @foreach(preg_split('/\r\n|\r|\n/', $ruangan->fasilitas) as $item)
                                             <div class="col-auto">
                                                 <span class="badge bg-primary-subtle text-primary border border-primary rounded-pill px-3 py-2">
                                                     {{ $item }}

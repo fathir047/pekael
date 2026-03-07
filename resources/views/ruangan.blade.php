@@ -30,7 +30,7 @@
                         <div class="mb-3">
                             <h6 class="text-uppercase text-muted small mb-2">Fasilitas</h6>
                             <div class="d-flex flex-wrap gap-2">
-                                @foreach(explode(' ', $data->fasilitas) as $fasilitas)
+                                @foreach(array_filter(preg_split('/\r\n|\r|\n/', $data->fasilitas)) as $fasilitas)
                                     <span class="badge bg-light text-dark border">
                                         <i class="bi bi-check-circle-fill text-success me-1"></i>
                                         {{ trim($fasilitas) }}
