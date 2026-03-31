@@ -40,4 +40,13 @@ Route::put('/bookings/{id}', [BookingApiController::class, 'update']);
 Route::delete('/bookings/{id}', [BookingApiController::class, 'destroy']);
 
 // route khusus update status
-Route::patch('bookings/{id}/status', [BookingApiController::class, 'update']);
+Route::patch('/bookings/{id}/status', [BookingApiController::class, 'update']);
+
+Route::get('/profile', function () {
+    $users = Auth::user()>first();
+
+    return response()->json([
+        'status' => true,
+        'data' => $users
+    ]);
+});

@@ -61,12 +61,19 @@ Route::get('/test', function () {
     ]);
 });
 
-Route::get('/users', function () {
+Route::get('/test-users', function () {
     $users = User::select('id', 'name', 'email', 'created_at')->get();
-
     return response()->json([
         'status' => true,
         'data' => $users
     ]);
 });
 
+// Route::get('/users', function () {
+//     $users = User::select('id', 'name', 'email', 'created_at')->get();
+
+//     return response()->json([
+//         'status' => true,
+//         'data' => $users
+//     ]);
+// });
