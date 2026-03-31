@@ -11,12 +11,17 @@ use App\Http\Controllers\Api\BookingApiController;
 Route::post('/login', [AuthController::class, 'login']);
 Route::middleware('auth:sanctum')->post('/logout', [AuthController::class, 'logout']);
 
-// user management
-Route::get('/users', [UserController::class, 'index']);
-Route::get('/users/{id}', [UserController::class, 'show']);
-Route::post('/users', [UserController::class, 'store']);
-Route::put('/users/{id}', [UserController::class, 'update']);
-Route::delete('/users/{id}', [UserController::class, 'destroy']);
+Route::middleware('auth:sanctum')->group(function () {
+
+    // user management
+        Route::get('/users', [UserController::class, 'index']);
+        Route::get('/users/{id}', [UserController::class, 'show']);
+        Route::post('/users', [UserController::class, 'store']);
+        Route::put('/users/{id}', [UserController::class, 'update']);
+        Route::delete('/users/{id}', [UserController::class, 'destroy']);
+});
+
+
 
 // ruang management
 Route::get('/ruangans', [RuanganApiController::class, 'index']);
@@ -42,11 +47,11 @@ Route::delete('/bookings/{id}', [BookingApiController::class, 'destroy']);
 // route khusus update status
 Route::patch('/bookings/{id}/status', [BookingApiController::class, 'update']);
 
-// Route::get('/profile', function () {
-//     $users = Auth::user()>first();
+Route::get('/profile', function () {
+    $users = Auth::user()->first();
 
-//     return response()->json([
-//         'status' => true,
-//         'data' => $users
-//     ]);
-// });
+    return response()->json([
+        'status' => true,
+        'data' => $users
+    ]);
+});
