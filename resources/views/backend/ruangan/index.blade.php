@@ -9,9 +9,24 @@
     <div class="card shadow-sm">
         <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
             <h4 class="mb-0">Data Ruangan</h4>
-            <a href="{{ route('backend.ruangan.create') }}" class="btn btn-sm btn-light text-primary fw-semibold">Tambah Data</a>
+            <a href="{{ route('backend.ruangan.create') }}" class="btn btn-sm btn-light text-primary fw-semibold">
+                Tambah Data
+            </a>
         </div>
+
         <div class="card-body">
+
+            <!-- SEARCH CUSTOM -->
+            <div class="mb-3 d-flex justify-content-end">
+                <div class="input-group w-25">
+                    <span class="input-group-text">
+                        <i class="ti ti-search"></i>
+                    </span>
+                    <input type="text" id="searchRuangan" class="form-control" placeholder="Search ruangan...">
+                </div>
+            </div>
+
+            <!-- TABLE -->
             <div class="table-responsive">
                 <table class="table table-bordered table-striped align-middle" id="ruanganTable">
                     <thead class="table-head">
@@ -28,13 +43,15 @@
                         @foreach ($ruangans as $ruangan)
                         <tr>
                             <td class="text-center">{{ $loop->iteration }}</td>
-                            <td class="text-center"><img src="{{ asset('storage/'.$ruangan->cover) }}" alt="cover" width="60%"></td>
+                            <td class="text-center">
+                                <img src="{{ asset('storage/'.$ruangan->cover) }}" alt="cover" width="60%">
+                            </td>
                             <td class="text-center">{{ $ruangan->nama }}</td>
                             <td class="text-center">{{ $ruangan->kapasitas }}</td>
-                            <td class="text-center">{{Str::limit( $ruangan->fasilitas, 20 )}}</td>
+                            <td class="text-center">{{ Str::limit($ruangan->fasilitas, 20) }}</td>
                             <td class="text-center">
                                 <div class="dropdown">
-                                    <button class="dropdown-toggle form-control" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <button class="dropdown-toggle form-control" type="button" data-bs-toggle="dropdown">
                                         <i class="ti ti-dots"></i>
                                     </button>
                                     <ul class="dropdown-menu dropdown-menu-end">
@@ -65,6 +82,7 @@
                     </tbody>
                 </table>
             </div>
+
         </div>
     </div>
 </div>
@@ -73,9 +91,20 @@
 @push('scripts')
 <script src="https://cdn.datatables.net/2.3.2/js/dataTables.js"></script>
 <script src="https://cdn.datatables.net/2.3.2/js/dataTables.bootstrap5.js"></script>
+
 <script>
     $(document).ready(function () {
-        $('#ruanganTable').DataTable();
+
+        // INIT DATATABLE TANPA SEARCH DEFAULT
+        let table = $('#ruanganTable').DataTable({
+            dom: 't<"d-flex justify-content-between mt-2"ip>'
+        });
+
+        // SEARCH CUSTOM
+        $('#searchRuangan').on('keyup', function () {
+            table.search(this.value).draw();
+        });
+
     });
 </script>
 @endpush

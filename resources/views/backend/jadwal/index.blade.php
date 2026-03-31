@@ -9,9 +9,24 @@
     <div class="card shadow-sm">
         <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
             <h4 class="mb-0">Jadwal Tetap</h4>
-            <a href="{{ route('backend.jadwal.create') }}" class="btn btn-sm btn-light text-primary fw-semibold">Tambah Data</a>
+            <a href="{{ route('backend.jadwal.create') }}" class="btn btn-sm btn-light text-primary fw-semibold">
+                Tambah Data
+            </a>
         </div>
+
         <div class="card-body">
+
+            <!-- SEARCH CUSTOM -->
+            <div class="mb-3 d-flex justify-content-end">
+                <div class="input-group w-25">
+                    <span class="input-group-text">
+                        <i class="ti ti-search"></i>
+                    </span>
+                    <input type="text" id="searchJadwal" class="form-control" placeholder="Search jadwal...">
+                </div>
+            </div>
+
+            <!-- TABLE -->
             <div class="table-responsive">
                 <table class="table table-bordered table-striped align-middle" id="jadwalTable">
                     <thead class="table-head">
@@ -29,14 +44,14 @@
                         @foreach ($jadwals as $jadwal)
                         <tr>
                             <td class="text-center">{{ $loop->iteration }}</td>
-                            <td class="text-center">{{ $jadwal->ruangan->nama }}</td> 
+                            <td class="text-center">{{ $jadwal->ruangan->nama }}</td>
                             <td class="text-center">{{ $jadwal->tanggal_format }}</td>
                             <td class="text-center">{{ $jadwal->jam_mulai }}</td>
                             <td class="text-center">{{ $jadwal->jam_selesai }}</td>
                             <td class="text-center">{{ $jadwal->ket }}</td>
                             <td class="text-center">
                                 <div class="dropdown">
-                                    <button class="dropdown-toggle form-control" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <button class="dropdown-toggle form-control" type="button" data-bs-toggle="dropdown">
                                         <i class="ti ti-dots"></i>
                                     </button>
                                     <ul class="dropdown-menu dropdown-menu-end">
@@ -67,6 +82,7 @@
                     </tbody>
                 </table>
             </div>
+
         </div>
     </div>
 </div>
@@ -75,9 +91,20 @@
 @push('scripts')
 <script src="https://cdn.datatables.net/2.3.2/js/dataTables.js"></script>
 <script src="https://cdn.datatables.net/2.3.2/js/dataTables.bootstrap5.js"></script>
+
 <script>
     $(document).ready(function () {
-        $('#jadwalTable').DataTable();
+
+        // INIT TANPA SEARCH DEFAULT
+        let table = $('#jadwalTable').DataTable({
+            dom: 't<"d-flex justify-content-between mt-2"ip>'
+        });
+
+        // SEARCH CUSTOM
+        $('#searchJadwal').on('keyup', function () {
+            table.search(this.value).draw();
+        });
+
     });
 </script>
 @endpush

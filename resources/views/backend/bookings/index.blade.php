@@ -27,7 +27,7 @@
             </div>
         </div>
 
-        {{-- Filter --}}
+        {{-- FILTER --}}
         <div class="px-3 py-3">
             <form method="GET" action="{{ route('backend.bookings.index') }}">
                 <div class="row">
@@ -58,18 +58,29 @@
                         </select>
                     </div>
 
-                    <div class="col-md-3 mb-2">
-                        <button type="submit" class="btn btn-outline-primary">Terapkan</button>
-                        <a href="{{ route('backend.bookings.index') }}"
-                           class="btn btn-outline-danger ms-2">
-                           Tampilkan Semua
+                    <div class="col-md-3 mb-2 d-flex align-items-end gap-2">
+                        <button type="submit" class="btn btn-outline-primary w-100">
+                            Terapkan
+                        </button>
+                        <a href="{{ route('backend.bookings.index') }}"class="btn btn-outline-danger w-100">
+                            Reset
                         </a>
                     </div>
                 </div>
             </form>
         </div>
 
-        {{-- Flash Message --}}
+        {{-- SEARCH CUSTOM --}}
+        <div class="px-3 mb-2 d-flex justify-content-end">
+            <div class="input-group w-25">
+                <span class="input-group-text">
+                    <i class="ti ti-search"></i>
+                </span>
+                <input type="text" id="searchBooking" class="form-control" placeholder="Search booking...">
+            </div>
+        </div>
+
+        {{-- FLASH --}}
         <div class="px-3">
             @if(session('success'))
                 <div class="alert alert-success alert-dismissible fade show">
@@ -79,7 +90,7 @@
             @endif
         </div>
 
-        {{-- Table --}}
+        {{-- TABLE --}}
         <div class="card-body">
             <div class="table-responsive">
                 <table class="table table-bordered table-striped" id="bookingTable">
@@ -105,7 +116,7 @@
                             <td class="text-center">{{ $booking->jam_mulai }}</td>
                             <td class="text-center">{{ $booking->jam_selesai }}</td>
 
-                            {{-- Update Status Langsung --}}
+                            {{-- STATUS --}}
                             <td class="text-center">
                                 <form action="{{ route('backend.bookings.update-status', $booking->id) }}"
                                       method="POST">
@@ -115,23 +126,15 @@
                                     <select name="status"
                                             class="form-select form-select-sm"
                                             onchange="this.form.submit()">
-                                        <option value="Pending" {{ $booking->status == 'Pending' ? 'selected' : '' }}>
-                                            Pending
-                                        </option>
-                                        <option value="Diterima" {{ $booking->status == 'Diterima' ? 'selected' : '' }}>
-                                            Diterima
-                                        </option>
-                                        <option value="Ditolak" {{ $booking->status == 'Ditolak' ? 'selected' : '' }}>
-                                            Ditolak
-                                        </option>
-                                        <option value="Selesai" {{ $booking->status == 'Selesai' ? 'selected' : '' }}>
-                                            Selesai
-                                        </option>
+                                        <option value="Pending" {{ $booking->status == 'Pending' ? 'selected' : '' }}>Pending</option>
+                                        <option value="Diterima" {{ $booking->status == 'Diterima' ? 'selected' : '' }}>Diterima</option>
+                                        <option value="Ditolak" {{ $booking->status == 'Ditolak' ? 'selected' : '' }}>Ditolak</option>
+                                        <option value="Selesai" {{ $booking->status == 'Selesai' ? 'selected' : '' }}>Selesai</option>
                                     </select>
                                 </form>
                             </td>
 
-                            {{-- Aksi --}}
+                            {{-- AKSI --}}
                             <td class="text-center">
                                 <div class="dropdown">
                                     <button class="btn btn-sm btn-light dropdown-toggle"
@@ -176,9 +179,18 @@
 @push('scripts')
 <script src="https://cdn.datatables.net/2.3.2/js/dataTables.js"></script>
 <script src="https://cdn.datatables.net/2.3.2/js/dataTables.bootstrap5.js"></script>
+
 <script>
     $(document).ready(function () {
-        $('#bookingTable').DataTable();
+
+        let table = $('#bookingTable').DataTable({
+            dom: 't<"d-flex justify-content-between mt-2"ip>'
+        });
+
+        $('#searchBooking').on('keyup', function () {
+            table.search(this.value).draw();
+        });
+
     });
 </script>
 @endpush
