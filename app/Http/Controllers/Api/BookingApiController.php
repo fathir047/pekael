@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Models\bookings;
 use App\Models\jadwals;
@@ -60,7 +61,7 @@ class BookingApiController extends Controller
     {
         // Validasi awal
         $request->validate([
-            'user_id'     => 'required|exists:users,id',
+            'user_id'     => 'nullable|exists:users,id',
             'ruang_id'    => 'required|exists:ruangans,id',
             'tanggal'     => 'required|date',
             'jam_mulai'   => 'required',
@@ -119,7 +120,7 @@ class BookingApiController extends Controller
         }
 
         $booking = bookings::create([
-            'user_id'     => $request->user_id,
+            'user_id'     => Auth::id(),
             'ruang_id'    => $request->ruang_id,
             'tanggal'     => $request->tanggal,
             'jam_mulai'   => $request->jam_mulai,

@@ -14,6 +14,12 @@ class RuanganApiController extends Controller
     {
         $ruangans = ruangans::latest()->get();
 
+        foreach ($ruangans as $ruangan) {
+            $ruangan->cover = $ruangan->cover
+                ? url('storage/' . $ruangan->cover)
+                : null;
+        }
+
         return response()->json([
             'status' => true,
             'message' => 'Data ruangan berhasil diambil',
