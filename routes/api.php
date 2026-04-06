@@ -11,45 +11,45 @@ use App\Http\Controllers\Api\BookingApiController;
 Route::post('/login', [AuthController::class, 'login']);
 Route::middleware('auth:sanctum')->post('/logout', [AuthController::class, 'logout']);
 
-// Route::middleware('auth:sanctum')->group(function () {
-// });
+Route::middleware('auth:sanctum')->group(function () {
 
 // user management
-Route::get('/users', [UserController::class, 'index']);
-Route::get('/users/{id}', [UserController::class, 'show']);
-Route::post('/users', [UserController::class, 'store']);
-Route::put('/users/{id}', [UserController::class, 'update']);
-Route::delete('/users/{id}', [UserController::class, 'destroy']);
+    Route::get('/users', [UserController::class, 'index']);
+    Route::get('/users/{id}', [UserController::class, 'show']);
+    Route::post('/users', [UserController::class, 'store']);
+    Route::put('/users/{id}', [UserController::class, 'update']);
+    Route::delete('/users/{id}', [UserController::class, 'destroy']);
 
-// ruang management
-Route::get('/ruangans', [RuanganApiController::class, 'index']);
-Route::get('/ruangans/{id}', [RuanganApiController::class, 'show']);
-Route::post('/ruangans', [RuanganApiController::class, 'store']);
-Route::put('/ruangans/{id}', [RuanganApiController::class, 'update']);
-Route::delete('/ruangans/{id}', [RuanganApiController::class, 'destroy']);
+    // ruang management
+    Route::get('/ruangans', [RuanganApiController::class, 'index']);
+    Route::get('/ruangans/{id}', [RuanganApiController::class, 'show']);
+    Route::post('/ruangans', [RuanganApiController::class, 'store']);
+    Route::put('/ruangans/{id}', [RuanganApiController::class, 'update']);
+    Route::delete('/ruangans/{id}', [RuanganApiController::class, 'destroy']);
 
-// jadwal management
-Route::get('/jadwals', [JadwalApiController::class, 'index']);
-Route::get('/jadwals/{id}', [JadwalApiController::class, 'show']);
-Route::post('/jadwals', [JadwalApiController::class, 'store']);
-Route::put('/jadwals/{id}', [JadwalApiController::class, 'update']);
-Route::delete('/jadwals/{id}', [JadwalApiController::class, 'destroy']);
+    // jadwal management
+    Route::get('/jadwals', [JadwalApiController::class, 'index']);
+    Route::get('/jadwals/{id}', [JadwalApiController::class, 'show']);
+    Route::post('/jadwals', [JadwalApiController::class, 'store']);
+    Route::put('/jadwals/{id}', [JadwalApiController::class, 'update']);
+    Route::delete('/jadwals/{id}', [JadwalApiController::class, 'destroy']);
 
-// booking management
-Route::get('/bookings', [BookingApiController::class, 'index']);
-Route::get('/bookings/{id}', [BookingApiController::class, 'show']);
-Route::post('/bookings', [BookingApiController::class, 'store']);
-Route::put('/bookings/{id}', [BookingApiController::class, 'update']);
-Route::delete('/bookings/{id}', [BookingApiController::class, 'destroy']);
+    // booking management
+    Route::get('/bookings', [BookingApiController::class, 'index']);
+    Route::get('/bookings/{id}', [BookingApiController::class, 'show']);
+    Route::post('/bookings', [BookingApiController::class, 'store']);
+    Route::put('/bookings/{id}', [BookingApiController::class, 'update']);
+    Route::delete('/bookings/{id}', [BookingApiController::class, 'destroy']);
 
-// route khusus update status
-Route::patch('/bookings/{id}/status', [BookingApiController::class, 'update']);
+    // route khusus update status
+    Route::patch('/bookings/{id}/status', [BookingApiController::class, 'update']);
 
-Route::get('/profile', function () {
-    $users = Auth::user()->first();
+    Route::get('/profile', function () {
+        $users = Auth::user()->first();
 
-    return response()->json([
-        'status' => true,
-        'data' => $users
-    ]);
+        return response()->json([
+            'status' => true,
+            'data' => $users
+        ]);
+    });
 });
