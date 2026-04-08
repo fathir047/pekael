@@ -15,11 +15,6 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 
-//siswasmkassalaam_ruangin_qzz_io
-// siswasmkassalaam_ruangin_qzz_io
-// xAxpAzqRkpmQjwkg
-
-
 Route::get('/', [FrontendController::class, 'index']);
 Auth::routes();
 
