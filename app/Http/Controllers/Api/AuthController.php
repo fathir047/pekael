@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
@@ -9,19 +10,40 @@ class AuthController extends Controller
 {
     public function login(Request $request)
     {
+        // Validasi input
+        $request->validate([
+            'email'    => 'required|email',
+            'password' => 'required|min:6',
+        ]);
 
-        if (! Auth::attempt($request->only('email', 'password'))) {
+        // Cek email & password
+        if (!Auth::attempt($request->only('email', 'password'))) {
             return response()->json([
-                'message' => 'kamu siapa? ko bisa salah terus loginnya',
+                'status'  => false,
+                'message' => 'Email atau password salah',
             ], 401);
         }
 
         $user = Auth::user();
 
-        // buat token (Sanctum)
+        // ===== CEK: ADMIN TIDAK BOLEH LOGIN KE FLUTTER =====
+        if ($user->is_admin == 1) {
+            // Logout langsung
+            Auth::logout();
+            
+            return response()->json([
+                'status'  => false,
+                'message' => 'Admin tidak bisa mengakses Flutter app. Gunakan web dashboard.',
+                'error'   => 'admin_not_allowed',
+            ], 403);
+        }
+
+        // ===== USER BIASA BISA LOGIN =====
+        // Buat token
         $token = $user->createToken('api-token')->plainTextToken;
 
         return response()->json([
+            'status'   => true,
             'message'  => 'Login berhasil',
             'user'     => [
                 'id'       => $user->id,
@@ -29,7 +51,6 @@ class AuthController extends Controller
                 'email'    => $user->email,
                 'is_admin' => $user->is_admin,
             ],
-            'redirect' => $user->is_admin == 1 ? '/admin' : '/',
             'token'    => $token,
         ]);
     }
@@ -39,6 +60,7 @@ class AuthController extends Controller
         $request->user()->currentAccessToken()->delete();
 
         return response()->json([
+            'status'  => true,
             'message' => 'Logout berhasil',
         ]);
     }
