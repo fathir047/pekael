@@ -407,75 +407,61 @@
     <nav class="navbar navbar-expand-lg shadow navbar-custom">
         <div class="container-fluid" style="max-width: 100%; padding: 0;">
 
-            <!-- Logo -->
-            <a class="navbar-brand fw-bold" href="{{ url('/') }}">
-                <img src="{{ asset('assets/backend/img/nav_user.png') }}" alt="Logo">
-            </a>
+      <!-- Logo -->
+      <a class="navbar-brand fw-bold text-primary" href="{{ url('/') }}">
+        <img src="{{ asset('assets/backend/img/nav_user.png') }}" alt="Logo" style="height: 40px;">
+      </a>
 
-            <!-- Toggle Button (Mobile) -->
-            <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent"
-                    aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
+      <!-- Toggle Button (Mobile) -->
+      <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent">
+        <span class="navbar-toggler-icon"></span>
+      </button>
 
-            <!-- Navbar Items -->
-            <div class="collapse navbar-collapse" id="navbarContent">
-                <ul class="navbar-nav mx-auto">
-                    <li class="nav-item">
-                        <a class="nav-link {{ request()->is('/') ? 'active' : '' }}"
-                           href="{{ url('/') }}">
-                            Beranda
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link {{ request()->is('bookings/create') ? 'active' : '' }}"
-                           href="{{ route('bookings.create') }}">
-                            Booking
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link {{ request()->is('ruangan') ? 'active' : '' }}"
-                           href="{{ route('ruangan.show') }}">
-                            Ruangan
-                        </a>
-                    </li>
-                    @auth
-                    <li class="nav-item">
-                        <a class="nav-link {{ request()->is('bookings/riwayat') ? 'active' : '' }}"
-                           href="{{ route('bookings.riwayat') }}">
-                            Riwayat
-                        </a>
-                    </li>
-                    @endauth
-                </ul>
+      <!-- Navbar Items -->
+      <div class="collapse navbar-collapse" id="navbarContent">
+        <ul class="navbar-nav mx-auto gap-lg-4">
+          <li class="nav-item">
+            <a class="nav-link text-dark fw-medium" href="{{ url('/') }}">Beranda</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link text-dark fw-medium" href="{{ route('bookings.create') }}">Booking</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link text-dark fw-medium" href="{{ route('ruangan.show') }}">Ruangan</a>
+          </li>
+          @auth
+          <li class="nav-item">
+            <a class="nav-link text-dark fw-medium" href="{{ route('bookings.riwayat') }}">Riwayat</a>
+          </li>
+          @endauth
+        </ul>
 
-                <!-- Auth -->
-                <ul class="navbar-nav ms-auto">
-                    @guest
-                        <li class="nav-item">
-                            <a class="btn btn-primary" href="{{ route('login') }}">Login</a>
-                        </li>
-                    @else
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
-                               aria-expanded="false">
-                                {{ Auth::user()->name }}
-                            </a>
-                            <ul class="dropdown-menu dropdown-menu-end">
-                                <li>
-                                    <a class="dropdown-item text-danger" href="{{ route('logout') }}"
-                                       onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                                        Logout
-                                    </a>
-                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                                        @csrf
-                                    </form>
-                                </li>
-                            </ul>
-                        </li>
-                    @endguest
-                </ul>
-            </div>
-        </div>
-    </nav>
+        <!-- Auth -->
+        <ul class="navbar-nav ms-auto">
+          @guest
+            <li class="nav-item">
+              <a class="btn btn-primary rounded-pill px-5 py-3" href="{{ route('login') }}">Login</a>
+            </li>
+          @else
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle text-dark" href="#" role="button" data-bs-toggle="dropdown">
+                {{ Auth::user()->name }}
+              </a>
+              <ul class="dropdown-menu dropdown-menu-end">
+                <li>
+                  <a class="dropdown-item text-danger" href="{{ route('logout') }}"
+                     onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                    Logout
+                  </a>
+                  <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                    @csrf
+                  </form>
+                </li>
+              </ul>
+            </li>
+          @endguest
+        </ul>
+      </div>
+    </div>
+  </nav>
 </div>
