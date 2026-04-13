@@ -9728,5 +9728,9 @@
     "platform-overrides": {
         "php": "8.3.0"
     },
+<<<<<<< HEAD
     "plugin-api-version": "2.9.0"
+=======
+    "plugin-api-version": "2.6.0"
+>>>>>>> fc7afd0390b2a8f4ea634e6c146282ba28f8c442
 }

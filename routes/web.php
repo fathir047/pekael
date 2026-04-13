@@ -10,22 +10,34 @@ use App\Http\Controllers\FrontendController;
 use App\Http\Controllers\User\UserBookingController;
 use App\Http\Middleware\Admin;
 use Illuminate\Support\Facades\Auth;
-
-// api
 use Illuminate\Support\Facades\Route;
+use App\Models\User;
 
+//tes doang
 
+// =====================
+// PUBLIC ROUTES
+// =====================
 Route::get('/', [FrontendController::class, 'index']);
+
 Auth::routes();
-
-Route::get('/booking', [FrontendController::class, 'booking']);
-Route::resource('/bookings', BookingController::class);
-
-
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
+// =====================
+// USER (MEMBER) ROUTES
+// =====================
+Route::middleware(['auth'])->group(function () {
+    Route::get('/booking/create', [UserBookingController::class, 'create'])->name('bookings.create');
+    Route::post('/booking', [UserBookingController::class, 'store'])->name('bookings.store');
+    Route::get('/booking/riwayat', [UserBookingController::class, 'riwayat'])->name('bookings.riwayat');
+    Route::get('/ruangan', [UserBookingController::class, 'show'])->name('ruangan.show');
+    Route::get('/ruangan/{id}', [UserBookingController::class, 'tampil'])->name('ruangan.detail');
+});
 
+// =====================
+// ADMIN ROUTES
+// =====================
 Route::group(['prefix' => 'admin', 'as' => 'backend.', 'middleware' => ['auth', Admin::class]], function () {
     Route::get('/', [BackendController::class, 'index']);
     Route::resource('/user', UserController::class);
@@ -33,44 +45,18 @@ Route::group(['prefix' => 'admin', 'as' => 'backend.', 'middleware' => ['auth', 
     Route::resource('/jadwal', JadwalController::class);
     Route::resource('/bookings', BookingController::class);
     Route::get('bookings-export', [BookingController::class, 'export'])->name('bookings.export');
-    Route::put('/bookings/{id}/update-status',[BookingController::class, 'updateStatus'])->name('bookings.update-status');
+    Route::put('/bookings/{id}/update-status', [BookingController::class, 'updateStatus'])->name('bookings.update-status');
     Route::post('/users/import', [ImportUserController::class, 'import'])->name('users.import');
 });
 
-
-
-Route::middleware(['auth'])->group(function () {
-    Route::get('/booking/create', [UserBookingController::class, 'create'])->name('bookings.create');
-    Route::post('/booking', [UserBookingController::class, 'store'])->name('bookings.store');
-    Route::get('/booking/riwayat', [UserBookingController::class, 'riwayat'])->name('bookings.riwayat');
-    Route::get('/ruangan', [UserBookingController::class, 'show'])->name('ruangan.show');
-    Route::get('/ruangan/{id}', [UserBookingController::class, 'tampil'])->name('ruangan.show');
-});
-
-Route::get('/ruangan/{id}', [FrontendController::class, 'ruanganShow'])->name('ruangan.detail');
-
-use App\Models\User;
-
+// =====================
+// TEST ROUTES
+// =====================
 Route::get('/test', function () {
-    return response()->json([
-        'status' => true,
-        'message' => 'API berhasil jalan'
-    ]);
+    return response()->json(['status' => true, 'message' => 'API berhasil jalan']);
 });
 
 Route::get('/test-users', function () {
     $users = User::select('id', 'name', 'email', 'created_at')->get();
-    return response()->json([
-        'status' => true,
-        'data' => $users
-    ]);
+    return response()->json(['status' => true, 'data' => $users]);
 });
-
-// Route::get('/users', function () {
-//     $users = User::select('id', 'name', 'email', 'created_at')->get();
-
-//     return response()->json([
-//         'status' => true,
-//         'data' => $users
-//     ]);
-// });
